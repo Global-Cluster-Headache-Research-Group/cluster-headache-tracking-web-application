@@ -1,0 +1,3 @@
+databaseChangeLog:
+- include:
+    file: classpath:db/changelog/db.changelog-release-1.x.x.sql

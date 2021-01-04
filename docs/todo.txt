@@ -1,0 +1,37 @@
+Things to track:
+
+Attacks
+Investigate how number of pain free days between clusters depends on age, preventing treatment, weight, blood pressure, hormones 
+
+Sleep  
+Investigate if broken sleep pattern or lack of sleep can change intensity, quantity or frequency or frequency of cluster attacks.
+Investigate that change in a sleep pattern can notify of a coming cluster.
+Investigate if heart rate changes during sleep can be used to notify a patient about coming attack. 
+ 
+Heart rate 
+Investigate if high heart rate during an attack can improves O2 consumption and thus faster abort an attack.
+
+Blood pressure 
+Investigate if low blood pressure can change intensity, quantity or frequency or frequency of cluster attacks
+
+Height and Weight
+Investigate if body mass index (BMI=m/h^2) affects attack strength 
+
+Age
+Investigate if with age CH attacks get milder/stronger, consider menopause in women.
+
+Abortive treatments
+Investigate  if a drug(or combination) may increase/decrease intensity, quantity or frequency or frequency of cluster attacks
+
+Preventive treatments
+Investigate if a drug(or combination) may increase/decrease intensity, quantity or frequency or frequency of cluster attacks
+
+
+Hormones
+Investigate if hormone change can trigger a cluster, or can be used to predict a cluster.
+Investigate if hormones can be used to abort a cluster.
+
+Side effects
+Investigate which short term and long side effects can be caused by various treatments on order to warn patients about possible consequences . 
+
+

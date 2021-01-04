@@ -1,0 +1,32 @@
+get rid of autoconfigurations that are not needed
+find out how to list all auto configs
+split spring app configuration annotations
+
+@Configuration
+@Import({
+        DispatcherServletAutoConfiguration.class,
+        EmbeddedServletContainerAutoConfiguration.class,
+        ErrorMvcAutoConfiguration.class,
+        HttpEncodingAutoConfiguration.class,
+        HttpMessageConvertersAutoConfiguration.class,
+        JacksonAutoConfiguration.class,
+        ServerPropertiesAutoConfiguration.class,
+        PropertyPlaceholderAutoConfiguration.class,
+        ThymeleafAutoConfiguration.class,
+        WebMvcAutoConfiguration.class,
+        WebSocketAutoConfiguration.class,
+})
+
+finish parsing attacks using spring-data-jdbc
+finish parsing attacks
+
+consider having synatic pk for time series or switch to hibernate
+create graphics date-time->attack intensity, consider other graphs
+build sql for tracking avg cluster length per preventing treatment
+add login page
+add profile storing
+add page that allows to enter attack+abortive
+add page that allows to enter preventive
+add page that allows to select abortive and preventive treatments
+
+ 
