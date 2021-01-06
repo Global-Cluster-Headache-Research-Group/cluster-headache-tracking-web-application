@@ -3,7 +3,7 @@ package org.chtracker.dao.metadata;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("metadata.treatment_type")
+@Table("metadata\".\"treatment_type")
 public class TreatmentType {
 
 	@Id

@@ -33,20 +33,19 @@
 --CREATE EXTENSION address_standardizer;
 
 -- changeset yilativs:1 context:common failOnError: true
-CREATE EXTENSION IF NOT EXISTS timescaledb;
+--CREATE EXTENSION IF NOT EXISTS timescaledb;
 
 --in case if we will have to use UUIDs
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+--CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 --in order to install postgis
 --https://postgis.net/docs/postgis_installation.html
-CREATE EXTENSION IF NOT EXISTS 	postgis;
+--CREATE EXTENSION IF NOT EXISTS 	postgis;
 
 
 --DROP SCHEMA IF EXISTS reports CASCADE; -- attacks, treatments
 --DROP SCHEMA IF EXISTS metadata CASCADE; -- treatment types
 --DROP SCHEMA IF EXISTS profile CASCADE; -- user profile related data: roles, privileges, passwords
-
 
 
 CREATE SCHEMA profile;
@@ -121,7 +120,7 @@ CREATE TABLE report.sleep(
 	PRIMARY KEY (patient_id,started)
 );
 
-SELECT create_hypertable('report.sleep', 'started');
+--SELECT create_hypertable('report.sleep', 'started');
 
 CREATE TABLE report.heartrate(
 	started TIMESTAMP NOT NULL,	
@@ -162,7 +161,7 @@ CREATE TABLE report.attack(
 );
 --SELECT create_hypertable('report.attack', 'started');
 
-CREATE TABLE report.abortive_treatment_usage(
+CREATE TABLE report.abortive_treatment(
 	started TIMESTAMP NOT NULL,
 	stopped TIMESTAMP CHECK (stopped > started),--some treatments like oxygen or aer
 	attack_started TIMESTAMP NOT NULL,
@@ -173,9 +172,9 @@ CREATE TABLE report.abortive_treatment_usage(
     comments VARCHAR(4000),
 	PRIMARY KEY (patient_id,treatment_type_id,started,attack_started)
 );
---SELECT create_hypertable('report.abortive_treatment_usage', 'started');
+--SELECT create_hypertable('report.abortive_treatment', 'started');
 
-CREATE TABLE report.preventive_treatment_usage(
+CREATE TABLE report.preventive_treatment(
 	started TIMESTAMP NOT NULL,
 	patient_id INT NOT NULL REFERENCES profile.patient(id),
 	treatment_type_id INT NOT NULL REFERENCES metadata.treatment_type(id),
@@ -183,27 +182,28 @@ CREATE TABLE report.preventive_treatment_usage(
 	comments VARCHAR(4000),
 	PRIMARY KEY (patient_id,started,treatment_type_id)
 );
---SELECT create_hypertable('report.preventive_treatment_usage', 'started');
+--SELECT create_hypertable('report.preventive_treatment', 'started');
 
 
-INSERT INTO metadata.treatment_type (name,units) VALUES ('100% O2 via nonrebreathing mask','lpm');--lpm stands for litters per minute
-INSERT INTO metadata.treatment_type (name,units) VALUES ('100% O2 via demand valve','lpm');--lpm stands for litters per minute
+INSERT INTO metadata.treatment_type (name,units) VALUES ('100% oxygen via nonrebreathing mask','lpm');--lpm stands for litters per minute
+INSERT INTO metadata.treatment_type (name,units) VALUES ('100% o2 via demand valve','lpm');--lpm stands for litters per minute
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan injection','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan nasal powder','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan nasal spray','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan pills','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Caffeine drink, e.g. coffee or redbull','mg');
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Caffeine in a drink e.g. coffee, redbull or pepsi','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Caffeine pills','mg');
 INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Galcanezumab','mg','Emgality');
 INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Erenumab','mg','Aimovig');
 INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Fremanezumab','mg','Ajovy');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Lidocaine drops','mg');
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Lidocaine drops 4%','mg');
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Cannabis inhalation','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Cardio Workout','bpm');--heart beats per minute
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Hyperventilation','bpm');--heart beats per minute
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Verapamil','mg');--preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 pills','IU'); --preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 sun exposure','seconds'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 UVB lamp','minutes'); --preventive
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 UVB lamp','seconds'); --preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Psilocybin mushroom','g');--preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('LSA','mg');--preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('LSD','mg');--preventive 
@@ -218,6 +218,6 @@ INSERT INTO metadata.treatment_type (name,units) VALUES ('Propranolol','mg'); --
 
 
 
-INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked) VALUES('yilativs','yilativs@gmail.com','1978-07-05','Semochking Vitaliy Evgenevich',NULL,1,FALSE);
-INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked) VALUES('john','do@spam.net','1974-12-15','John Dow',NULL,2,TRUE);
+INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('yilativs','yilativs@somemail.com','1978-01-01','Vitaliy Semochkin',NULL,1,FALSE,FALSE);
+INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('pavias','pavia@somemail.com','1974-12-15','Pavia Anderson',NULL,2,FALSE,FALSE);
 
