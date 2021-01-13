@@ -20,16 +20,16 @@ public class ReportRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	static final String ATTACK_INSERT_SQL = "INSERT INTO report.attack (started,stopped,patient_id,max_pain_level,comments) VALUES (?,?,?,?,?)";
+	static final String ATTACK_INSERT_SQL = "INSERT INTO report.attack (started,stopped,patient_id,max_pain_level,comments) VALUES (?,?,?,?,?) ON CONFLICT DO NOTHING";
 
 	public void save(Attack attack) {
 		jdbcTemplate.update(ATTACK_INSERT_SQL, attack.getStarted(), attack.getStopped(), attack.getPatient().getId(), attack.getMaxPainLevel(), attack.getComments());
 	}
 
-	static final String ABORTIVE_INSERT_SQL = "INSERT INTO report.abortive_treatment (started,stopped,attack_started,patient_id,treatment_type_id, doze,successful,comments) VALUES(?,?,?,?,?,?,?,?)";
+	static final String ABORTIVE_INSERT_SQL = "INSERT INTO report.abortive_treatment (attack_started,started,stopped,patient_id,treatment_type_id, doze,successful,comments) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING";
 
 	public void save(AbortiveTreatment treatment) {
-		jdbcTemplate.update(ABORTIVE_INSERT_SQL, treatment.getStarted(), treatment.getStopped(), treatment.getAttackStarted(), treatment.getPatient().getId(), treatment.getTreatmentType().getId(),
+		jdbcTemplate.update(ABORTIVE_INSERT_SQL, treatment.getAttackStarted(), treatment.getStarted(), treatment.getStopped(), treatment.getPatient().getId(), treatment.getTreatmentType().getId(),
 				treatment.getDoze(), treatment.getSuccessful(), treatment.getComments());
 	}
 
@@ -40,11 +40,10 @@ public class ReportRepository {
 		return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
 	}
 
-	static final String PREVENTIVE_TREATMENT_INSERT_SQL = "INSERT INTO report.preventive_treatment (started,patient_id,treatment_type_id, doze) VALUES(?,?,?,?)";
+	static final String PREVENTIVE_TREATMENT_INSERT_SQL = "INSERT INTO report.preventive_treatment (started,patient_id,treatment_type_id, doze) VALUES(?,?,?,?) ON CONFLICT DO NOTHING";
 
 	public void save(PreventiveTreatment treatment) {
 		jdbcTemplate.update(PREVENTIVE_TREATMENT_INSERT_SQL, treatment.getStarted(), treatment.getPatient().getId(), treatment.getTreatmentType().getId(), treatment.getDoze());
-		System.out.println(treatment);
 	}
 
 }

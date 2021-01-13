@@ -35,13 +35,11 @@ import org.chtracker.dao.report.Attack;
 import org.chtracker.dao.report.PreventiveTreatment;
 import org.chtracker.dao.report.ReportRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Service
-public class YilativsCvsDataLoader {
+public class YilativsCvsDataLoader extends AbstractLoader {
 
 	@Value("${attacks.yilativs.path:#{null}}")
 	String attacksDataPath;
@@ -57,20 +55,18 @@ public class YilativsCvsDataLoader {
 
 	final PatientRepository patientRepository;
 
-	final JdbcTemplate jdbcTemplate;
-
 	final Patient patient;
 
 	final ReportRepository reportRepository;
 
-	public YilativsCvsDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, JdbcTemplate jdbcTemplate, ReportRepository reportRepository) {
+	public YilativsCvsDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository) {
 		this.treatmentRepository = treatmentRepository;
 		this.patientRepository = patientRepository;
-		this.jdbcTemplate = jdbcTemplate;
 		patient = this.patientRepository.findByLogin("yilativs");
 		this.reportRepository = reportRepository;
 	}
 
+	@Transactional
 	public void load() throws FileNotFoundException, IOException, ParseException {
 		if (attacksDataPath == null) {
 			throw new IllegalStateException("Attacks data can not be loaded: attacks.yilativs.path is not specified");
@@ -127,7 +123,6 @@ public class YilativsCvsDataLoader {
 						reportRepository.save(new PreventiveTreatment(startDateTime, patient, treatmentType, doze, preventiveTreatmentString));
 					} else {
 						LocalDateTime previousUsageDate = previousUsageDateOptional.get();
-						System.err.println(previousUsageDate);
 						if (previousUsageDate.toLocalDate().equals(startDate)) {
 							continue;// because treatment already registered
 						} else {
@@ -153,11 +148,11 @@ public class YilativsCvsDataLoader {
 	static int getDoze(TreatmentType treatmentType, String doze) {
 		switch (treatmentType.getName()) {
 		case "100% oxygen via nonrebreathing mask":
-			return 15;
+			return DEFUALT_O2_LPM;
 		case "Vitamin D3 pills":
 		case "Vitamin D3 sun exposure":
 		case "Vitamin D3 UVB lamp":
-			return 1000;
+			return DEFAULT_VITAMIN_D3_DOZE_UI;
 		case "Sumatriptan pills":
 			return Integer.parseInt(doze.toLowerCase().replaceAll("[a-z]", "").trim());
 		case "Sumatriptan nasal spray":
@@ -165,14 +160,14 @@ public class YilativsCvsDataLoader {
 		case "Verapamil":
 			return Integer.parseInt(doze.toLowerCase().replaceAll("[a-z]", "").trim());
 		case "Caffeine in a drink e.g. coffee, redbull or pepsi":
-			return 200;
+			return DEFAULT_COFFIEINE_DRINK_MG;
 		case "Psilocybin mushroom":
 			return Integer.parseInt(doze.toLowerCase().replaceAll("[a-z]", "").trim());
 		case "Lidocaine drops 4%":
 			return 4;
 		case "Cardio Workout":
 		case "Hyperventilation":
-			return 150;
+			return DEFAULT_BPM;
 		default:
 			throw new IllegalArgumentException(doze + " doze is incorrect for type " + treatmentType);
 		}
@@ -192,15 +187,18 @@ public class YilativsCvsDataLoader {
 				status = i < statuses.length ? statuses[i] : status;
 				i++;
 				try {
-					TreatmentType treatmentType = treatmentRepository.findByNameContainingIgnoreCase(treatmentString.split("\\d")[0].trim());
+					String treatmentName = treatmentString.split("\\d")[0].trim();
+
+					TreatmentType treatmentType = treatmentName.toLowerCase().contains("oxygen") ? treatmentRepository.findByNameContainingIgnoreCase("100% oxygen via nonrebreathing mask")
+							: treatmentRepository.findByNameContainingIgnoreCase(treatmentName);
 					if (treatmentType == null)
 						continue;
 					int doze = getDoze(treatmentType, treatmentString);
 					if (treatmentType.getName().equals("100% oxygen via nonrebreathing mask") || treatmentType.getName().equals("Cardio Workout")
 							|| treatmentType.getName().equals("Hyperventilation")) {
-						reportRepository.save(new AbortiveTreatment(started, stopped, started, patient, treatmentType, doze, status, comments));
+						reportRepository.save(new AbortiveTreatment(started, started, stopped, patient, treatmentType, doze, status, comments));
 					} else {
-						reportRepository.save(new AbortiveTreatment(started, null, started, patient, treatmentType, doze, status, comments));
+						reportRepository.save(new AbortiveTreatment(started, started, null, patient, treatmentType, doze, status, comments));
 					}
 				} catch (RuntimeException e) {
 					System.out.println(treatmentsString);

@@ -7,9 +7,9 @@ import org.chtracker.dao.profile.Patient;
 
 public class AbortiveTreatment {
 
+	private LocalDateTime attackStarted;
 	private LocalDateTime started;
 	private LocalDateTime stopped;
-	private LocalDateTime attackStarted;
 
 	private final Patient patient;
 	private final TreatmentType treatmentType;
@@ -17,10 +17,10 @@ public class AbortiveTreatment {
 	private Boolean successful;
 	private String comments;
 
-	public AbortiveTreatment(LocalDateTime started, LocalDateTime stopped, LocalDateTime attackStarted, Patient patient, TreatmentType treatmentType, int doze, Boolean successful, String comments) {
+	public AbortiveTreatment(LocalDateTime attackStarted, LocalDateTime started, LocalDateTime stopped, Patient patient, TreatmentType treatmentType, int doze, Boolean successful, String comments) {
+		this.attackStarted = attackStarted;
 		this.started = started;
 		this.stopped = stopped;
-		this.attackStarted = attackStarted;
 		this.patient = patient;
 		this.treatmentType = treatmentType;
 		this.doze = doze;
@@ -126,5 +126,11 @@ public class AbortiveTreatment {
 	public TreatmentType getTreatmentType() {
 		return treatmentType;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "AbortiveTreatment [attackStarted=" + attackStarted + ", started=" + started + ", stopped=" + stopped + ", patient=" + patient + ", treatmentType=" + treatmentType + ", doze=" + doze
+				+ ", successful=" + successful + "]";
+	}
+
 }
