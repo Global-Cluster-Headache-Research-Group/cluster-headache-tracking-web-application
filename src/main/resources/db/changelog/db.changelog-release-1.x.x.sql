@@ -162,9 +162,9 @@ CREATE TABLE report.attack(
 --SELECT create_hypertable('report.attack', 'started');
 
 CREATE TABLE report.abortive_treatment(
+	attack_started TIMESTAMP NOT NULL,
 	started TIMESTAMP NOT NULL,
 	stopped TIMESTAMP CHECK (stopped > started),--some treatments like oxygen or aer
-	attack_started TIMESTAMP NOT NULL,
 	patient_id INT NOT NULL REFERENCES profile.patient(id),
 	treatment_type_id INT NOT NULL REFERENCES metadata.treatment_type(id),
     doze INT NOT NULL, CHECK (doze > 0),
@@ -186,7 +186,7 @@ CREATE TABLE report.preventive_treatment(
 
 
 INSERT INTO metadata.treatment_type (name,units) VALUES ('100% oxygen via nonrebreathing mask','lpm');--lpm stands for litters per minute
-INSERT INTO metadata.treatment_type (name,units) VALUES ('100% o2 via demand valve','lpm');--lpm stands for litters per minute
+INSERT INTO metadata.treatment_type (name,units) VALUES ('100% oxygen via demand valve','lpm');--lpm stands for litters per minute
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan injection','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan nasal powder','mg');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan nasal spray','mg');
@@ -197,7 +197,8 @@ INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Galcanezuma
 INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Erenumab','mg','Aimovig');
 INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Fremanezumab','mg','Ajovy');
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Lidocaine drops 4%','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Cannabis inhalation','mg');
+INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Acetylsalicylic  acid','mg','Aspirin');
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Cannabis inhalation','mg');--considered as both, abortive and preventive 
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Cardio Workout','bpm');--heart beats per minute
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Hyperventilation','bpm');--heart beats per minute
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Verapamil','mg');--preventive
@@ -215,8 +216,10 @@ INSERT INTO metadata.treatment_type (name,units) VALUES ('Melatonin','mg'); --pr
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Ergotamine','mg'); --preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Valproate','mg'); --preventive
 INSERT INTO metadata.treatment_type (name,units) VALUES ('Propranolol','mg'); --preventive
-
-
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Tetrahydrocannabinol inhalant','mg'); --preventive, not yet listed as an official treatment
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Cannabidiol inhalant','mg'); --preventive, not yet listed as an official treatment
+INSERT INTO metadata.treatment_type (name,units) VALUES ('Betamethasone injection','mcg'); --preventive, not yet listed as an official treatment (careful mcg=1000mg
+INSERT INTO metadata.treatment_type (name,units) VALUES ('SPG Neurostimulator' ,'seconds');
 
 INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('yilativs','yilativs@somemail.com','1978-01-01','Vitaliy Semochkin',NULL,1,FALSE,FALSE);
 INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('pavias','pavia@somemail.com','1974-12-15','Pavia Anderson',NULL,2,FALSE,FALSE);
