@@ -17,6 +17,8 @@ split spring app configuration annotations
         WebSocketAutoConfiguration.class,
 })
 
+disable open session in view for spring spring.jpa.open-in-view=false  
+
 finish parsing attacks using spring-data-jdbc
 finish parsing attacks
 
