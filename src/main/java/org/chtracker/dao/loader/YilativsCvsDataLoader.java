@@ -1,6 +1,5 @@
 package org.chtracker.dao.loader;
 
-import static com.nimbusds.oauth2.sdk.util.StringUtils.isBlank;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDateTime.parse;
@@ -37,6 +36,7 @@ import org.chtracker.dao.report.ReportRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 public class YilativsCvsDataLoader extends AbstractLoader {
@@ -98,10 +98,10 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 	private String getComments(CSVRecord record) {
 		String painDescription = record.get(DESCRIPTION.ordinal());
 		String comments = record.get(COMMENTS.ordinal());
-		if (isBlank(comments)) {
+		if (StringUtils.hasLength(comments)) {
 			comments = painDescription;
 		} else {
-			if (!isBlank(painDescription)) {
+			if (!StringUtils.hasLength(painDescription)) {
 				comments = painDescription + "; " + comments;
 			}
 		}
@@ -109,7 +109,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 	}
 
 	private void savePreventiveTreatments(String preventiveTreatmentString, LocalDateTime startDateTime) {
-		if (!isBlank(preventiveTreatmentString)) {
+		if (!StringUtils.hasLength(preventiveTreatmentString)) {
 			String[] treatmentStrings = preventiveTreatmentString.split("\\+|,");
 			for (String treatmentString : treatmentStrings) {
 				try {
@@ -174,12 +174,12 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 	}
 
 	void saveAbortiveTreatments(String treatmentsString, LocalDateTime started, LocalDateTime stopped, String statusesString, String comments) {
-		if (!isBlank(treatmentsString)) {
+		if (!StringUtils.hasLength(treatmentsString)) {
 			String[] treatmentStrings = treatmentsString.split("\\+|,");
 			String[] statusStrings = statusesString.split("/");
 			Boolean[] statuses = new Boolean[statusStrings.length];
 			for (int i = 0; i < statusStrings.length; i++) {
-				statuses[i] = isBlank(statusStrings[i]) ? null : parseBoolean(statusStrings[i]);
+				statuses[i] = StringUtils.hasLength(statusStrings[i]) ? null : parseBoolean(statusStrings[i]);
 			}
 			Boolean status = null;
 			int i = 0;

@@ -60,8 +60,8 @@ CREATE TABLE profile.patient(
 	name VARCHAR(1000) NOT NULL,
 	password_hash bytea[],
 	gender SMALLINT,
-	is_blocked BOOLEAN,
-	is_deleted BOOLEAN
+	is_blocked BOOLEAN DEFAULT FALSE,
+	is_deleted BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE metadata.treatment_type(
@@ -69,6 +69,8 @@ CREATE TABLE metadata.treatment_type(
     name VARCHAR(1000) NOT NULL,
     units VARCHAR(200) NOT NULL,
     trade_name VARCHAR(200),
+    is_abortive BOOLEAN DEFAULT FALSE,
+    is_preventive BOOLEAN  DEFAULT FALSE,
     UNIQUE (name, units)
 );
 
@@ -185,41 +187,43 @@ CREATE TABLE report.preventive_treatment(
 --SELECT create_hypertable('report.preventive_treatment', 'started');
 
 
-INSERT INTO metadata.treatment_type (name,units) VALUES ('100% oxygen via nonrebreathing mask','lpm');--lpm stands for litters per minute
-INSERT INTO metadata.treatment_type (name,units) VALUES ('100% oxygen via demand valve','lpm');--lpm stands for litters per minute
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan injection','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan nasal powder','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan nasal spray','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Sumatriptan pills','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Caffeine in a drink e.g. coffee, redbull or pepsi','mg');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Caffeine pills','mg');
-INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Galcanezumab','mg','Emgality');
-INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Erenumab','mg','Aimovig');
-INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Fremanezumab','mg','Ajovy');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Lidocaine drops 4%','mg');
-INSERT INTO metadata.treatment_type (name,units,trade_name) VALUES ('Acetylsalicylic  acid','mg','Aspirin');
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Cannabis inhalation','mg');--considered as both, abortive and preventive 
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Cardio Workout','bpm');--heart beats per minute
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Hyperventilation','bpm');--heart beats per minute
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Verapamil','mg');--preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 pills','IU'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 sun exposure','seconds'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Vitamin D3 UVB lamp','seconds'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Psilocybin mushroom','g');--preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('LSA','mg');--preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('LSD','mg');--preventive 
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Lithium','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Topiramate','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Testosterone','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Tianeptine','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Melatonin','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Ergotamine','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Valproate','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Propranolol','mg'); --preventive
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Tetrahydrocannabinol inhalant','mg'); --preventive, not yet listed as an official treatment
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Cannabidiol inhalant','mg'); --preventive, not yet listed as an official treatment
-INSERT INTO metadata.treatment_type (name,units) VALUES ('Betamethasone injection','mcg'); --preventive, not yet listed as an official treatment (careful mcg=1000mg
-INSERT INTO metadata.treatment_type (name,units) VALUES ('SPG Neurostimulator' ,'seconds');
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('100% oxygen via nonrebreathing mask','lpm',TRUE);--lpm stands for litters per minute
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('100% oxygen via demand valve','lpm',TRUE);--lpm stands for litters per minute
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Sumatriptan injection','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Sumatriptan nasal powder','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Sumatriptan nasal spray','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Sumatriptan pills','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Caffeine in a drink e.g. coffee, redbull or pepsi','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Caffeine pills','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,trade_name,is_abortive) VALUES ('Galcanezumab','mg','Emgality',TRUE);
+INSERT INTO metadata.treatment_type (name,units,trade_name,is_abortive) VALUES ('Erenumab','mg','Aimovig',TRUE);
+INSERT INTO metadata.treatment_type (name,units,trade_name,is_abortive) VALUES ('Fremanezumab','mg','Ajovy',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Lidocaine drops 4%','mg',TRUE);
+INSERT INTO metadata.treatment_type (name,units,trade_name,is_abortive) VALUES ('Acetylsalicylic  acid','mg','Aspirin',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('SPG Neurostimulator' ,'seconds',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Gammacore Neurostimulator' ,'seconds',TRUE);
+INSERT INTO metadata.treatment_type (name,units,is_abortive,is_preventive) VALUES ('Cannabis inhalation','mg',TRUE,TRUE);--considered as both, abortive and preventive 
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Cardio Workout','bpm',TRUE);--heart beats per minute
+INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Hyperventilation','bpm',TRUE);--heart beats per minute
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Verapamil','mg',TRUE);--preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Vitamin D3 pills','IU',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Vitamin D3 sun exposure','seconds',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Vitamin D3 UVB lamp','seconds',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Psilocybin mushroom','g',TRUE);--preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('LSA','mg',TRUE);--preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('LSD','mg',TRUE);--preventive 
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Lithium','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Topiramate','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Testosterone','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Tianeptine','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Melatonin','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Ergotamine','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Valproate','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Propranolol','mg',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Tetrahydrocannabinol inhalant','mg',TRUE); --preventive, not yet listed as an official treatment
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Cannabidiol inhalant','mg',TRUE); --preventive, not yet listed as an official treatment
+INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Betamethasone injection','mcg',TRUE); --preventive, not yet listed as an official treatment (careful mcg=1000mg
+
 
 INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('yilativs','yilativs@somemail.com','1978-01-01','Vitaliy Semochkin',NULL,1,FALSE,FALSE);
 INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('pavias','pavia@somemail.com','1974-12-15','Pavia Anderson',NULL,2,FALSE,FALSE);

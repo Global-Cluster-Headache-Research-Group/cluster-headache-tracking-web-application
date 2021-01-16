@@ -11,12 +11,17 @@ public class TreatmentType {
 	private final String name;
 	private final String units;
 	private final String tradeName;
+	private final boolean isAbortive;
+	private final boolean isPreventive;
 
-	public TreatmentType(int id, String name, String units, String tradeName) {
+
+	public TreatmentType(int id, String name, String units, String tradeName, boolean isAbortive, boolean isPreventive) {
 		this.id = id;
 		this.name = name;
 		this.units = units;
 		this.tradeName = tradeName;
+		this.isAbortive = isAbortive;
+		this.isPreventive = isPreventive;
 	}
 
 	public int getId() {
@@ -33,6 +38,14 @@ public class TreatmentType {
 
 	public String getTradeName() {
 		return tradeName;
+	}
+	
+	public boolean isAbortive() {
+		return isAbortive;
+	}
+
+	public boolean isPreventive() {
+		return isPreventive;
 	}
 
 	@Override

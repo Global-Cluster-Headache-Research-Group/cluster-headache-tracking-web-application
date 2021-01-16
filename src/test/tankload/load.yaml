@@ -1,0 +1,11 @@
+phantom:
+  address: 127.0.0.1:8080 # [Target's address]:[target's port]
+  uris:
+    - /TreatmentType/preventive
+  load_profile:
+    load_type: rps # schedule load by defining requests per second
+    schedule: line(1, 100, 1m) # starting from 1rps growing linearly to 10rps during 10 minutes
+console:
+  enabled: true # enable console output
+telegraf:
+  enabled: false # let's disable telegraf monitoring for the first time
