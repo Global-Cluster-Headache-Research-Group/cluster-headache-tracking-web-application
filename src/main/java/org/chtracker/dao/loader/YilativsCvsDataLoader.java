@@ -98,18 +98,18 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 	private String getComments(CSVRecord record) {
 		String painDescription = record.get(DESCRIPTION.ordinal());
 		String comments = record.get(COMMENTS.ordinal());
-		if (StringUtils.hasLength(comments)) {
-			comments = painDescription;
-		} else {
-			if (!StringUtils.hasLength(painDescription)) {
+		if (StringUtils.hasText(comments)) {
+			if (StringUtils.hasText(painDescription)) {
 				comments = painDescription + "; " + comments;
 			}
+		} else {
+			comments = painDescription;
 		}
 		return comments;
 	}
 
 	private void savePreventiveTreatments(String preventiveTreatmentString, LocalDateTime startDateTime) {
-		if (!StringUtils.hasLength(preventiveTreatmentString)) {
+		if (StringUtils.hasText(preventiveTreatmentString)) {
 			String[] treatmentStrings = preventiveTreatmentString.split("\\+|,");
 			for (String treatmentString : treatmentStrings) {
 				try {
@@ -174,12 +174,12 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 	}
 
 	void saveAbortiveTreatments(String treatmentsString, LocalDateTime started, LocalDateTime stopped, String statusesString, String comments) {
-		if (!StringUtils.hasLength(treatmentsString)) {
+		if (StringUtils.hasText(treatmentsString)) {
 			String[] treatmentStrings = treatmentsString.split("\\+|,");
 			String[] statusStrings = statusesString.split("/");
 			Boolean[] statuses = new Boolean[statusStrings.length];
 			for (int i = 0; i < statusStrings.length; i++) {
-				statuses[i] = StringUtils.hasLength(statusStrings[i]) ? null : parseBoolean(statusStrings[i]);
+				statuses[i] = StringUtils.hasText(statusStrings[i]) ? parseBoolean(statusStrings[i]):null;
 			}
 			Boolean status = null;
 			int i = 0;
@@ -187,6 +187,9 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 				status = i < statuses.length ? statuses[i] : status;
 				i++;
 				try {
+					if(treatmentsString.trim().length()==0) {
+						continue;
+					}
 					String treatmentName = treatmentString.split("\\d")[0].trim();
 
 					TreatmentType treatmentType = treatmentName.toLowerCase().contains("oxygen") ? treatmentRepository.findByNameContainingIgnoreCase("100% oxygen via nonrebreathing mask")
