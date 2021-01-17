@@ -206,7 +206,7 @@ INSERT INTO metadata.treatment_type (name,units,is_abortive,is_preventive) VALUE
 INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Cardio Workout','bpm',TRUE);--heart beats per minute
 INSERT INTO metadata.treatment_type (name,units,is_abortive) VALUES ('Hyperventilation','bpm',TRUE);--heart beats per minute
 INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Verapamil','mg',TRUE);--preventive
-INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Vitamin D3 pills','IU',TRUE); --preventive
+INSERT INTO metadata.treatment_type (name,units,trade_name,is_preventive) VALUES ('Cholecalciferol pills 1mcg=40IU','IU','Vitamin D3',TRUE); --preventive
 INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Vitamin D3 sun exposure','seconds',TRUE); --preventive
 INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Vitamin D3 UVB lamp','seconds',TRUE); --preventive
 INSERT INTO metadata.treatment_type (name,units,is_preventive) VALUES ('Psilocybin mushroom','g',TRUE);--preventive
