@@ -13,18 +13,18 @@ public class Patient {
 	private String email;
 	private LocalDate birthday;
 	private String name;
-	private byte[] password_hash;
+	private byte[] passwordHash;
 	private short gender;
 	private boolean isBlocked;
 	private boolean isDeleted;
 
-	public Patient(int id, String login, String email, LocalDate birthday, String name, byte[] password_hash, short gender, boolean isBlocked, boolean isDeleted) {
+	public Patient(int id, String login, String email, LocalDate birthday, String name, byte[] passwordHash, short gender, boolean isBlocked, boolean isDeleted) {
 		this.id = id;
 		this.login = login;
 		this.email = email;
 		this.birthday = birthday;
 		this.name = name;
-		this.password_hash = password_hash;
+		this.passwordHash = passwordHash;
 		this.gender = gender;
 		this.isBlocked = isBlocked;
 		this.isDeleted = isDeleted;
@@ -62,12 +62,12 @@ public class Patient {
 		this.name = name;
 	}
 
-	public byte[] getPassword_hash() {
-		return password_hash;
+	public byte[] getPasswordHash() {
+		return passwordHash;
 	}
 
-	public void setPassword_hash(byte[] password_hash) {
-		this.password_hash = password_hash;
+	public void setPasswordHash(byte[] passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	public short getGender() {
@@ -115,9 +115,7 @@ public class Patient {
 		if (getClass() != obj.getClass())
 			return false;
 		Patient other = (Patient) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		return id == other.id;
 	}
 
 	@Override
