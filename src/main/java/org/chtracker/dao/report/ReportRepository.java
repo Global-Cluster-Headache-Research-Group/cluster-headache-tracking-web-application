@@ -46,4 +46,10 @@ public class ReportRepository {
 		jdbcTemplate.update(PREVENTIVE_TREATMENT_INSERT_SQL, treatment.getStarted(), treatment.getPatient().getId(), treatment.getTreatmentType().getId(), treatment.getDoze());
 	}
 
+	static final String ATTACK_COUNT_SQL = "SELECT count(*) from report.attack where patient_id=?";
+
+	public int getAttackCount(Patient patient) {
+		return jdbcTemplate.queryForObject(ATTACK_COUNT_SQL, Integer.class, patient.getId());
+	}
+
 }

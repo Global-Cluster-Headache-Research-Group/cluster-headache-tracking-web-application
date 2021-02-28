@@ -33,15 +33,18 @@ import org.chtracker.dao.report.AbortiveTreatment;
 import org.chtracker.dao.report.Attack;
 import org.chtracker.dao.report.PreventiveTreatment;
 import org.chtracker.dao.report.ReportRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnNotWebApplication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
+@ConditionalOnNotWebApplication
 public class YilativsCvsDataLoader extends AbstractLoader {
 
-	@Value("${attacks.yilativs.path:#{null}}")
+	@Value("${attacks.yilativs.path:data/yilativs-attacks.tsv}")
 	String attacksDataPath;
 
 	static final DateTimeFormatter dateTimeFormatterWithSeconds = DateTimeFormatter.ofPattern("M/d/uuuu H:mm:ss");
@@ -59,9 +62,12 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 
 	final ReportRepository reportRepository;
 
-	public YilativsCvsDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository) {
+	private Logger logger;
+
+	public YilativsCvsDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository, Logger logger) {
 		this.treatmentRepository = treatmentRepository;
 		this.patientRepository = patientRepository;
+		this.logger = logger;
 		patient = this.patientRepository.findByLogin("yilativs");
 		this.reportRepository = reportRepository;
 	}
@@ -70,6 +76,10 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 	public void load() throws FileNotFoundException, IOException, ParseException {
 		if (attacksDataPath == null) {
 			throw new IllegalStateException("Attacks data can not be loaded: attacks.yilativs.path is not specified");
+		}
+		if (reportRepository.getAttackCount(patient)>0) {
+			logger.warn("Data from Yilativs were already loaded");
+			return;
 		}
 		try (Reader reader = new FileReader(attacksDataPath)) {
 			for (CSVRecord record : DEFAULT.withDelimiter('\t').parse(reader)) {
@@ -89,7 +99,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 					saveAbortiveTreatments(record.get(ABORTION_TREATMENT.ordinal()), startDateTime, startDateTime.plusMinutes(lasted), record.get(TREATMNT_STATUS.ordinal()), comments);
 					savePreventiveTreatments(record.get(CsvColumn.PREVENTIVE_TREATMENT.ordinal()), startDateTime);
 				} catch (Exception e) {
-					System.err.println(record + " " + e.getClass().getName() + " " + e.getMessage());
+					logger.error("failed to handle record" + record + " " + e.getClass().getName() + " " + e.getMessage(),e);
 				}
 			}
 		}
@@ -138,8 +148,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 						}
 					}
 				} catch (RuntimeException e) {
-					System.out.println(preventiveTreatmentString + " " + treatmentString);
-					e.printStackTrace();
+					logger.error(preventiveTreatmentString + " " + treatmentString, e);
 				}
 			}
 		}
@@ -179,7 +188,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 			String[] statusStrings = statusesString.split("/");
 			Boolean[] statuses = new Boolean[statusStrings.length];
 			for (int i = 0; i < statusStrings.length; i++) {
-				statuses[i] = StringUtils.hasText(statusStrings[i]) ? parseBoolean(statusStrings[i]):null;
+				statuses[i] = StringUtils.hasText(statusStrings[i]) ? parseBoolean(statusStrings[i]) : null;
 			}
 			Boolean status = null;
 			int i = 0;
@@ -187,7 +196,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 				status = i < statuses.length ? statuses[i] : status;
 				i++;
 				try {
-					if(treatmentsString.trim().length()==0) {
+					if (treatmentsString.trim().length() == 0) {
 						continue;
 					}
 					String treatmentName = treatmentString.split("\\d")[0].trim();
@@ -204,8 +213,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 						reportRepository.save(new AbortiveTreatment(started, started, null, patient, treatmentType, doze, status, comments));
 					}
 				} catch (RuntimeException e) {
-					System.out.println(treatmentsString);
-					e.printStackTrace();
+					logger.error("failed to save treatment string" + treatmentsString, e);
 				}
 			}
 		}

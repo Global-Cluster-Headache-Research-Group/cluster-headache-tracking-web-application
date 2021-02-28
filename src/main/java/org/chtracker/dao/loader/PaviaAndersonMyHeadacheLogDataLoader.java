@@ -18,17 +18,20 @@ import org.chtracker.dao.report.AbortiveTreatment;
 import org.chtracker.dao.report.Attack;
 import org.chtracker.dao.report.PreventiveTreatment;
 import org.chtracker.dao.report.ReportRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnNotWebApplication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@ConditionalOnNotWebApplication
 public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 
-	Map<Integer, LocalDateTime> idToStart = new HashedMap<>();
-	Map<Integer, LocalDateTime> idToEnd = new HashedMap<>();
-	@Value("${attacks.pavia.path:#{null}}")
-	String attacksDataPath;
+	private Map<Integer, LocalDateTime> idToStart = new HashedMap<>();
+	private Map<Integer, LocalDateTime> idToEnd = new HashedMap<>();
+	@Value("${attacks.pavia.path:data/Pavias-anfald-og-behandlinger-5000-anfald.xlsx}")
+	private String attacksDataPath;
 
 	static final DateTimeFormatter dateTimeFormatterWithSeconds = DateTimeFormatter.ofPattern("M/d/uuuu H:mm:ss");
 	static final DateTimeFormatter dateTimeFormatterWithoutSeconds = DateTimeFormatter.ofPattern("M/d/uuuu H:mm");
@@ -48,18 +51,26 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 	final ReportRepository reportRepository;
 	final TreatmentTypeRepository treatmentRepository;
 
-	public PaviaAndersonMyHeadacheLogDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository) {
+	private Logger logger;
+
+	public PaviaAndersonMyHeadacheLogDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository, Logger Logger) {
 		this.treatmentRepository = treatmentRepository;
 		this.patientRepository = patientRepository;
+		logger = Logger;
 		patient = this.patientRepository.findByLogin("pavias");
 		this.reportRepository = reportRepository;
 	}
 
 	@Transactional
-	public void load() throws FileNotFoundException, IOException, InvalidFormatException {
+	public synchronized void load() throws FileNotFoundException, IOException, InvalidFormatException {
 		if (attacksDataPath == null) {
 			throw new IllegalStateException("Attacks data can not be loaded: attacks.pavia.path is not specified");
 		}
+		if (reportRepository.getAttackCount(patient)>0) {
+			logger.warn("Data from Pavia Anderson were already loaded");
+			return;
+		}
+		
 		var workbook = new XSSFWorkbook(new File(attacksDataPath));
 		storeAttacks(workbook);
 		saveTreatments(workbook);
@@ -104,9 +115,9 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 	public void saveTreatment(int attackId, LocalDateTime treatmentStart, String treatment, Boolean successful) {
 		LocalDateTime attackStart = idToStart.get(attackId);
 		LocalDateTime attackEnd = idToEnd.get(attackId);
-		
+
 		if (treatmentStart.compareTo(attackEnd) >= 0) {
-			System.err.println("treatment started affter attack stopped for attack id=" + attackId + " and treatment=" + treatment);
+			logger.debug("treatment started affter attack stopped for attack id=" + attackId + " and treatment=" + treatment);
 			treatmentStart = attackEnd.minusMinutes(5);
 		}
 		try {
@@ -143,15 +154,15 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("SPG Neurostimulator");
 				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, treatmentStart.plusMinutes(15), patient, type, 15 * 60, successful, null));
 				reportRepository.save(new PreventiveTreatment(treatmentStart, patient, type, 15 * 60, treatment));
-			} else if (treatment.startsWith("Gon blokade - 2 ml + 0,5")){ 
+			} else if (treatment.startsWith("Gon blokade - 2 ml + 0,5")) {
 				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("Betamethasone");
 				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, treatmentStart.plusMinutes(15), patient, type, 500, successful, null));
-			}else{
-				throw new IllegalArgumentException("unnown teatment for attack="+attackId + " " + treatmentStart + " " + treatment);
+			} else {
+				throw new IllegalArgumentException("unnown teatment for attack=" + attackId + " " + treatmentStart + " " + treatment);
 			}
 
 		} catch (RuntimeException e) {
-			System.err.println("eror while handling treatment for attackId="+ attackId + " " + treatmentStart + " " + treatment + " " + successful);
+			logger.error("eror while handling treatment for attackId=" + attackId + " " + treatmentStart + " " + treatment + " " + successful);
 			throw e;
 		}
 
