@@ -37,7 +37,7 @@ WHERE cluster_end_date IS NOT NULL
 ORDER BY patient_id, cluster_start_date ;
 
 -- find attacks per cluster, avg attacks per day, total time in pain,  avg pain level
-
+--use NOW() to identify the distance from last cluster
 SELECT a.patient_id, cluster_number,cluster_start_date, cluster_end_date, cluster_length_days, days_from_previous_cluster, COUNT(*)AS attacks_per_cluster, ROUND(COUNT(*)::numeric/cluster_length_days,2) AS avg_attacks_per_day,  ROUND(avg(max_pain_level)) AS avg_pain_level  FROM (
 	SELECT  patient_id, cluster_number, cluster_start_date, cluster_end_date,  cluster_end_date::date-cluster_start_date::date AS cluster_length_days,  days_from_previous_cluster FROM(
 		SELECT 
