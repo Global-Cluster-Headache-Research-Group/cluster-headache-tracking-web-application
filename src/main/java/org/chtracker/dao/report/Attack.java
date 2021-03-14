@@ -2,15 +2,57 @@ package org.chtracker.dao.report;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.chtracker.dao.DataConfiguration;
 import org.chtracker.dao.profile.Patient;
 
+@Entity
+@Table(
+		schema = DataConfiguration.REPORT_SCHEMA_NAME, 
+		uniqueConstraints = { @UniqueConstraint(
+				name = "attack_uniq",
+				columnNames = { "started", "patient_id" }
+				) 
+		})
 public class Attack {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "attack_seq")
+	int id;
+
+	@NotNull
 	private LocalDateTime started;
 	private LocalDateTime stopped;
-	private final Patient patient;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(foreignKey = @ForeignKey(name = "attack__patient_fk"))
+	private Patient patient;
+	@Min(1)
+	@Max(10)
 	private int maxPainLevel;
 	private Boolean whileAsleep;
+	@Size(max = 1000)
 	private String comments;
+
+	Attack() {
+		// needed for Hibernate (we can use private, but it will trigger Unused
+		// constructor warning
+	}
 
 	public Attack(LocalDateTime started, LocalDateTime stopped, Patient patient, int maxPainLevel, Boolean whileAsleep, String comments) {
 		this.started = started;
@@ -83,15 +125,9 @@ public class Attack {
 		if (getClass() != obj.getClass())
 			return false;
 		Attack other = (Attack) obj;
-		if (patient == null) {
-			if (other.patient != null)
-				return false;
-		} else if (!patient.equals(other.patient))
+		if (!patient.equals(other.patient))
 			return false;
-		if (started == null) {
-			if (other.started != null)
-				return false;
-		} else if (!started.equals(other.started))
+		if (!started.equals(other.started))
 			return false;
 		return true;
 	}

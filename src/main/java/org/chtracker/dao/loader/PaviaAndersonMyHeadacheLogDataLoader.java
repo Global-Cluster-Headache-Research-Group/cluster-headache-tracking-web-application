@@ -10,14 +10,18 @@ import java.util.Map;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.chtracker.dao.metadata.TreatmentType;
-import org.chtracker.dao.metadata.TreatmentTypeRepository;
+import org.chtracker.dao.metadata.AbortiveTreatmentType;
+import org.chtracker.dao.metadata.AbortiveTreatmentTypeRepository;
+import org.chtracker.dao.metadata.PreventiveTreatmentType;
+import org.chtracker.dao.metadata.PreventiveTreatmentTypeRepository;
 import org.chtracker.dao.profile.Patient;
 import org.chtracker.dao.profile.PatientRepository;
 import org.chtracker.dao.report.AbortiveTreatment;
+import org.chtracker.dao.report.AbortiveTreatmentRepository;
 import org.chtracker.dao.report.Attack;
+import org.chtracker.dao.report.AttackRepository;
 import org.chtracker.dao.report.PreventiveTreatment;
-import org.chtracker.dao.report.ReportRepository;
+import org.chtracker.dao.report.PreventiveTreatmentRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnNotWebApplication;
@@ -28,8 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 @ConditionalOnNotWebApplication
 public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 
-	private Map<Integer, LocalDateTime> idToStart = new HashedMap<>();
-	private Map<Integer, LocalDateTime> idToEnd = new HashedMap<>();
+	private final Map<Integer, LocalDateTime> idToStart = new HashedMap<>();
+	private final Map<Integer, LocalDateTime> idToEnd = new HashedMap<>();
+	private final Map<Integer, Attack> idToAttack = new HashedMap<>();
 	@Value("${attacks.pavia.path:data/Pavias-anfald-og-behandlinger-5000-anfald.xlsx}")
 	private String attacksDataPath;
 
@@ -48,17 +53,31 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 
 	final Patient patient;
 
-	final ReportRepository reportRepository;
-	final TreatmentTypeRepository treatmentRepository;
+	final AbortiveTreatmentRepository abortiveTreatmentRepository;
+	final AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository;
 
 	private Logger logger;
+	private AttackRepository attackRepository;
+	private PreventiveTreatmentRepository preventiveTreatmentRepository;
+	private PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository;
 
-	public PaviaAndersonMyHeadacheLogDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository, Logger Logger) {
-		this.treatmentRepository = treatmentRepository;
+	public PaviaAndersonMyHeadacheLogDataLoader(
+			PatientRepository patientRepository, 
+			AttackRepository attackRepository, 
+			AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository, 
+			AbortiveTreatmentRepository abortiveTreatmentRepository,
+			PreventiveTreatmentRepository preventiveTreatmentRepository,
+			PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository,
+			Logger Logger) {
+		this.attackRepository = attackRepository;
+		this.abortiveTreatmentRepository = abortiveTreatmentRepository;
+		this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
+		
+		this.preventiveTreatmentRepository = preventiveTreatmentRepository;
+		this.preventiveTreatmentTypeRepository = preventiveTreatmentTypeRepository;
 		this.patientRepository = patientRepository;
-		logger = Logger;
 		patient = this.patientRepository.findByLogin("pavias");
-		this.reportRepository = reportRepository;
+		this.logger = Logger;
 	}
 
 	@Transactional
@@ -66,11 +85,11 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 		if (attacksDataPath == null) {
 			throw new IllegalStateException("Attacks data can not be loaded: attacks.pavia.path is not specified");
 		}
-		if (reportRepository.getAttackCount(patient)>0) {
+		if (attackRepository.countByPatient(patient) > 0) {
 			logger.warn("Data from Pavia Anderson were already loaded");
 			return;
 		}
-		
+
 		var workbook = new XSSFWorkbook(new File(attacksDataPath));
 		storeAttacks(workbook);
 		saveTreatments(workbook);
@@ -108,13 +127,14 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 			int level = (int) row.getCell(AttacSheetColumn.LEVEL.ordinal()).getNumericCellValue();
 			idToStart.put(id, start);
 			idToEnd.put(id, end);
-			reportRepository.save(new Attack(start, end, patient, level, null, null));
+			Attack attack = attackRepository.save(new Attack(start, end, patient, level, null, null));
+			idToAttack.put(id, attack);
 		}
 	}
 
 	public void saveTreatment(int attackId, LocalDateTime treatmentStart, String treatment, Boolean successful) {
-		LocalDateTime attackStart = idToStart.get(attackId);
 		LocalDateTime attackEnd = idToEnd.get(attackId);
+		Attack attack = idToAttack.get(attackId);
 
 		if (treatmentStart.compareTo(attackEnd) >= 0) {
 			logger.debug("treatment started affter attack stopped for attack id=" + attackId + " and treatment=" + treatment);
@@ -122,41 +142,49 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 		}
 		try {
 			if (treatment.startsWith("Energidrik")) {
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("Caffeine in a drink");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, type, DEFAULT_COFFIEINE_DRINK_MG, successful, null));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Caffeine in a drink");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient, attack, treatmentStart, null, type, DEFAULT_COFFIEINE_DRINK_MG, successful, null));
 			} else if (treatment.startsWith("Ilt O2 - 10-25l/min - Inhalant")) {
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("100% oxygen via nonrebreathing mask");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, attackEnd, patient, type, DEFUALT_O2_LPM, successful, null));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("100% oxygen via nonrebreathing mask");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient, attack, treatmentStart, attackEnd, type, DEFUALT_O2_LPM, successful, null));
 			} else if (treatment.startsWith("ODV - 130L/min - Inhalant/Spray")) {
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("100% oxygen via demand valve");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, attackEnd, patient, type, DEFUALT_O2_DEMAND_VALVE_LPM, successful, null));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("100% oxygen via demand valve");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, attackEnd, type, DEFUALT_O2_DEMAND_VALVE_LPM, successful, null));
 			} else if (treatment.startsWith("Cannabis - 1 joint - Inhalant/Spray")) {
-				TreatmentType tetrahydrocannabinolType = treatmentRepository.findByNameContainingIgnoreCase("Tetrahydrocannabinol");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, tetrahydrocannabinolType, 6, successful, null));
-				reportRepository.save(new PreventiveTreatment(treatmentStart, patient, tetrahydrocannabinolType, 6, treatment));
-				TreatmentType cannabidiolType = treatmentRepository.findByNameContainingIgnoreCase("Cannabidiol");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, cannabidiolType, 8, successful, null));
-				reportRepository.save(new PreventiveTreatment(treatmentStart, patient, cannabidiolType, 8, treatment));
+				AbortiveTreatmentType tetrahydrocannabinolType = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Tetrahydrocannabinol");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, null, tetrahydrocannabinolType, 6, successful, null));
+				
+				PreventiveTreatmentType preventiveTetrahydrocannabinolType = preventiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Tetrahydrocannabinol");
+				preventiveTreatmentRepository.save(new PreventiveTreatment(patient,treatmentStart,null, preventiveTetrahydrocannabinolType, 6, treatment));
+				
+				AbortiveTreatmentType cannabidiolType = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Cannabidiol");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, null, cannabidiolType, 8, successful, null));
+				
+				PreventiveTreatmentType preventiveCannabidiolType = preventiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Cannabidiol");
+				preventiveTreatmentRepository.save(new PreventiveTreatment(patient,treatmentStart, null, preventiveCannabidiolType, 8, treatment));
 			} else if (treatment.startsWith("Imigran - 6 mg - Injectable") || treatment.startsWith("Sumavel dose pro - 6mg - Injectable")) {
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("Sumatriptan injection");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, type, DEFAULT_SUMATRIPTAN_INJECTION_MG, successful, null));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Sumatriptan injection");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack,treatmentStart, null, type, DEFAULT_SUMATRIPTAN_INJECTION_MG, successful, null));
 			} else if (treatment.startsWith("Sumatriptan") && treatment.contains("Capsule")) {
 				int indexOfDozeSeparator = treatment.indexOf("-");
 				int dozeMg = Integer.parseInt(treatment.subSequence(indexOfDozeSeparator + 2, indexOfDozeSeparator + 4).toString());
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("Sumatriptan pills");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, type, dozeMg, successful, null));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Sumatriptan pills");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, null,  type, dozeMg, successful, null));
 			} else if (treatment.startsWith("Treo")) {
-				TreatmentType asperinType = treatmentRepository.findByNameContainingIgnoreCase("Acetylsalicylic");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, asperinType, 500, successful, null));
-				TreatmentType caffeinePilltype = treatmentRepository.findByNameContainingIgnoreCase("Caffeine pills");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, null, patient, caffeinePilltype, 50, successful, null));
+				AbortiveTreatmentType asperinType = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Acetylsalicylic");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, null,  asperinType, 500, successful, null));
+				AbortiveTreatmentType caffeinePilltype = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Caffeine pills");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, null,  caffeinePilltype, 50, successful, null));
 			} else if (treatment.startsWith("Neurostimulans")) {
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("SPG Neurostimulator");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, treatmentStart.plusMinutes(15), patient, type, 15 * 60, successful, null));
-				reportRepository.save(new PreventiveTreatment(treatmentStart, patient, type, 15 * 60, treatment));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("SPG Neurostimulator");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, treatmentStart.plusMinutes(15),  type, 15 * 60, successful, null));
+				
+				//we won't consider it preventive so far
+				//PreventiveTreatmentType preventiveType = preventiveTreatmentTypeRepository.findByNameContainingIgnoreCase("SPG Neurostimulator");
+				//preventiveTreatmentRepository.save(new PreventiveTreatment(patient, treatmentStart, null, preventiveType, 15 * 60, treatment));
 			} else if (treatment.startsWith("Gon blokade - 2 ml + 0,5")) {
-				TreatmentType type = treatmentRepository.findByNameContainingIgnoreCase("Betamethasone");
-				reportRepository.save(new AbortiveTreatment(attackStart, treatmentStart, treatmentStart.plusMinutes(15), patient, type, 500, successful, null));
+				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Betamethasone");
+				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, treatmentStart.plusMinutes(15),  type, 500, successful, null));
 			} else {
 				throw new IllegalArgumentException("unnown teatment for attack=" + attackId + " " + treatmentStart + " " + treatment);
 			}

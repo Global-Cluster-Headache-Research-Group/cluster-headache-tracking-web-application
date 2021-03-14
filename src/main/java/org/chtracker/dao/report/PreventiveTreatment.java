@@ -1,33 +1,50 @@
 package org.chtracker.dao.report;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-import org.chtracker.dao.metadata.TreatmentType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.chtracker.dao.DataConfiguration;
+import org.chtracker.dao.metadata.PreventiveTreatmentType;
 import org.chtracker.dao.profile.Patient;
 
-public class PreventiveTreatment {
-	private LocalDateTime started;
-	private final Patient patient;
-	private final TreatmentType treatmentType;
-	private int doze;
-	private String commnets;
+@Entity
+@Table(schema = DataConfiguration.REPORT_SCHEMA_NAME)
+public class PreventiveTreatment extends AbstractTreatment {
 
-	public PreventiveTreatment(LocalDateTime started, Patient patient, TreatmentType treatmentType, int doze, String commnets) {
-		super();
-		this.started = started;
-		this.patient = patient;
-		this.treatmentType = treatmentType;
-		this.doze = doze;
-		this.commnets = commnets;
+	@ManyToOne(optional = false)
+	@JoinColumn(foreignKey = @ForeignKey(name = "preventive_treatment__preventive_treatment_fk"))
+	private PreventiveTreatmentType preventiveTreatmentType;
+
+	PreventiveTreatment() {
+	}
+
+	public PreventiveTreatment(Patient patient, LocalDateTime started, LocalDateTime stopped, PreventiveTreatmentType preventiveTreatmentType, int doze, String comments) {
+		this.setStarted(started);
+		this.setPatient(patient);
+		this.setPrevetiveTreatmentType(preventiveTreatmentType);
+		this.setDoze(doze);
+		this.setComments(comments);
+	}
+
+	public PreventiveTreatmentType getPrevetiveTreatmentType() {
+		return preventiveTreatmentType;
+	}
+
+	public void setPrevetiveTreatmentType(PreventiveTreatmentType preventiveTreatmentType) {
+		this.preventiveTreatmentType = preventiveTreatmentType;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
-		result = prime * result + ((started == null) ? 0 : started.hashCode());
-		result = prime * result + ((treatmentType == null) ? 0 : treatmentType.hashCode());
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(preventiveTreatmentType);
 		return result;
 	}
 
@@ -35,67 +52,12 @@ public class PreventiveTreatment {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof PreventiveTreatment))
 			return false;
 		PreventiveTreatment other = (PreventiveTreatment) obj;
-		if (patient == null) {
-			if (other.patient != null)
-				return false;
-		} else if (!patient.equals(other.patient))
-			return false;
-		if (started == null) {
-			if (other.started != null)
-				return false;
-		} else if (!started.equals(other.started))
-			return false;
-		if (treatmentType == null) {
-			if (other.treatmentType != null)
-				return false;
-		} else if (!treatmentType.equals(other.treatmentType))
-			return false;
-		return true;
+		return Objects.equals(preventiveTreatmentType, other.preventiveTreatmentType);
 	}
 
-	@Override
-	public String toString() {
-		return "PreventiveTreatment [patient=" + patient + ", treatmentType=" + treatmentType + ", started=" + started + ", doze=" + doze + "]";
-	}
-
-	public LocalDateTime getStarted() {
-		return started;
-	}
-
-	public void setStarted(LocalDateTime started) {
-		this.started = started;
-	}
-
-	public int getDoze() {
-		return doze;
-	}
-
-	public void setDoze(int doze) {
-		this.doze = doze;
-	}
-
-	public String getCommnets() {
-		return commnets;
-	}
-
-	public void setCommnets(String commnets) {
-		this.commnets = commnets;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public TreatmentType getTreatmentType() {
-		return treatmentType;
-	}
-	
-
-	
-	
 }

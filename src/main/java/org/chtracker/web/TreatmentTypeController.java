@@ -1,10 +1,12 @@
 package org.chtracker.web;
 
-import java.util.List;
-
-import org.chtracker.dao.metadata.TreatmentType;
-import org.chtracker.dao.metadata.TreatmentTypeRepository;
+import org.chtracker.dao.metadata.AbortiveTreatmentType;
+import org.chtracker.dao.metadata.AbortiveTreatmentTypeRepository;
+import org.chtracker.dao.metadata.PreventiveTreatmentType;
+import org.chtracker.dao.metadata.PreventiveTreatmentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,21 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/TreatmentType")
 public class TreatmentTypeController {
 
-	private final TreatmentTypeRepository repository;
+	private final AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository;
+	private final PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository;
 
 	@Autowired
-	public TreatmentTypeController(TreatmentTypeRepository repository) {
-		this.repository = repository;
+	public TreatmentTypeController(AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository, PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository,
+			PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository2) {
+		this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
+		this.preventiveTreatmentTypeRepository = preventiveTreatmentTypeRepository2;
 	}
 
 	@GetMapping("abortive")
-	public List<TreatmentType> getAbortiveTreatmentTypes() {
-		return repository.findByIsAbortiveOrderByName(true);
+	public Iterable<AbortiveTreatmentType> getAbortiveTreatmentTypes() {
+		return abortiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
 	}
-	
+
 	@GetMapping("preventive")
-	public List<TreatmentType> getPrevetiveTreatmentTypes() {
-		return repository.findByIsPreventiveOrderByName(true);
+	public Iterable<PreventiveTreatmentType> getPrevetiveTreatmentTypes() {
+		return preventiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
 	}
 
 }

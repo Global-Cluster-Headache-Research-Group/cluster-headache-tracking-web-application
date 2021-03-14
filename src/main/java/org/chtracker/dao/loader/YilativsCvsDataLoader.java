@@ -25,14 +25,19 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import org.apache.commons.csv.CSVRecord;
-import org.chtracker.dao.metadata.TreatmentType;
-import org.chtracker.dao.metadata.TreatmentTypeRepository;
+import org.chtracker.dao.metadata.AbortiveTreatmentType;
+import org.chtracker.dao.metadata.AbortiveTreatmentTypeRepository;
+import org.chtracker.dao.metadata.AbstractTreatmentType;
+import org.chtracker.dao.metadata.PreventiveTreatmentType;
+import org.chtracker.dao.metadata.PreventiveTreatmentTypeRepository;
 import org.chtracker.dao.profile.Patient;
 import org.chtracker.dao.profile.PatientRepository;
 import org.chtracker.dao.report.AbortiveTreatment;
+import org.chtracker.dao.report.AbortiveTreatmentRepository;
 import org.chtracker.dao.report.Attack;
+import org.chtracker.dao.report.AttackRepository;
 import org.chtracker.dao.report.PreventiveTreatment;
-import org.chtracker.dao.report.ReportRepository;
+import org.chtracker.dao.report.PreventiveTreatmentRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnNotWebApplication;
@@ -54,22 +59,37 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 		DATE, TIME, LASTED, LEVEL, DESCRIPTION, ABORTION_TREATMENT, TREATMNT_STATUS, LEFT_SHADOWS, PREVENTIVE_TREATMENT, COMMENTS
 	}
 
-	final TreatmentTypeRepository treatmentRepository;
+	final AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository;
+	final PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository;
 
 	final PatientRepository patientRepository;
 
 	final Patient patient;
 
-	final ReportRepository reportRepository;
+	final Logger logger;
 
-	private Logger logger;
+	final AttackRepository attackRepository;
 
-	public YilativsCvsDataLoader(TreatmentTypeRepository treatmentRepository, PatientRepository patientRepository, ReportRepository reportRepository, Logger logger) {
-		this.treatmentRepository = treatmentRepository;
+	private PreventiveTreatmentRepository preventiveTreatmentRepository;
+
+	private AbortiveTreatmentRepository abortiveTreatmentRepository;
+
+	public YilativsCvsDataLoader(
+			AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository,
+			PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository,
+			PatientRepository patientRepository,
+			AttackRepository attackRepository,
+			AbortiveTreatmentRepository abortiveTreatmentRepository,
+			PreventiveTreatmentRepository preventiveTreatmentRepository,
+			Logger logger) {
+		this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
+		this.preventiveTreatmentTypeRepository = preventiveTreatmentTypeRepository;
 		this.patientRepository = patientRepository;
+		this.attackRepository = attackRepository;
+		this.abortiveTreatmentRepository = abortiveTreatmentRepository;
+		this.preventiveTreatmentRepository = preventiveTreatmentRepository;
 		this.logger = logger;
 		patient = this.patientRepository.findByLogin("yilativs");
-		this.reportRepository = reportRepository;
 	}
 
 	@Transactional
@@ -77,7 +97,7 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 		if (attacksDataPath == null) {
 			throw new IllegalStateException("Attacks data can not be loaded: attacks.yilativs.path is not specified");
 		}
-		if (reportRepository.getAttackCount(patient)>0) {
+		if (attackRepository.countByPatient(patient) > 0) {
 			logger.warn("Data from Yilativs were already loaded");
 			return;
 		}
@@ -95,11 +115,12 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 					int level = 2 * parseInt(record.get(LEVEL.ordinal()));
 
 					String comments = getComments(record);
-					reportRepository.save(new Attack(startDateTime, startDateTime.plusMinutes(lasted), patient, level, null, comments));
-					saveAbortiveTreatments(record.get(ABORTION_TREATMENT.ordinal()), startDateTime, startDateTime.plusMinutes(lasted), record.get(TREATMNT_STATUS.ordinal()), comments);
-					savePreventiveTreatments(record.get(CsvColumn.PREVENTIVE_TREATMENT.ordinal()), startDateTime);
+					Attack attack = new Attack(startDateTime, startDateTime.plusMinutes(lasted), patient, level, null, comments);
+					attackRepository.save(attack);
+					saveAbortiveTreatments(attack,record.get(ABORTION_TREATMENT.ordinal()), startDateTime, startDateTime.plusMinutes(lasted), record.get(TREATMNT_STATUS.ordinal()), comments);
+					savePreventiveTreatments(record.get(CsvColumn.PREVENTIVE_TREATMENT.ordinal()), attack);
 				} catch (Exception e) {
-					logger.error("failed to handle record" + record + " " + e.getClass().getName() + " " + e.getMessage(),e);
+					logger.error("failed to handle record" + record + " " + e.getClass().getName() + " " + e.getMessage(), e);
 				}
 			}
 		}
@@ -118,30 +139,32 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 		return comments;
 	}
 
-	private void savePreventiveTreatments(String preventiveTreatmentString, LocalDateTime startDateTime) {
+	private void savePreventiveTreatments(String preventiveTreatmentString, Attack attack) {
 		if (StringUtils.hasText(preventiveTreatmentString)) {
 			String[] treatmentStrings = preventiveTreatmentString.split("\\+|,");
 			for (String treatmentString : treatmentStrings) {
 				try {
-					TreatmentType treatmentType = treatmentRepository.findByNameContainingIgnoreCase(treatmentString.split(" \\d")[0].trim());
-					if (treatmentType == null)
+					PreventiveTreatmentType preventiveTreatmentType = preventiveTreatmentTypeRepository.findByNameContainingIgnoreCase(treatmentString.split(" \\d")[0].trim());
+					if (preventiveTreatmentType == null)
 						continue;
-					int doze = getDoze(treatmentType, treatmentString);
-					LocalDate startDate = startDateTime.toLocalDate();
-					Optional<LocalDateTime> previousUsageDateOptional = reportRepository.getPreviousPreventiveTreatmentUsageStart(treatmentType, startDateTime, patient);
-					if (previousUsageDateOptional.isEmpty()) {
-						reportRepository.save(new PreventiveTreatment(startDateTime, patient, treatmentType, doze, preventiveTreatmentString));
+					int doze = getDoze(preventiveTreatmentType, treatmentString);
+					LocalDate startDate = attack.getStarted().toLocalDate();
+					Optional<PreventiveTreatment> previouspreventiveTreatmentOptional = preventiveTreatmentRepository.findFirstByPatientAndPreventiveTreatmentTypeAndStartedLessThanEqual(patient,
+							preventiveTreatmentType, attack.getStarted());
+					if (previouspreventiveTreatmentOptional.isEmpty()) {
+						preventiveTreatmentRepository.save(new PreventiveTreatment(patient, attack.getStarted(), null, preventiveTreatmentType, doze, preventiveTreatmentString));
 					} else {
-						LocalDateTime previousUsageDate = previousUsageDateOptional.get();
+						LocalDateTime previousUsageDate = previouspreventiveTreatmentOptional.get().getStarted();
 						if (previousUsageDate.toLocalDate().equals(startDate)) {
 							continue;// because treatment already registered
 						} else {
-							reportRepository.save(new PreventiveTreatment(startDateTime, patient, treatmentType, doze, preventiveTreatmentString));
+							//TODO validate following line
+							preventiveTreatmentRepository.save(new PreventiveTreatment(patient,attack.getStarted(), null, preventiveTreatmentType, doze, preventiveTreatmentString));
 							long days = ChronoUnit.DAYS.between(previousUsageDate.toLocalDate(), startDate);
 							if (days < 30) {
 								int i = 1;
 								while (previousUsageDate.plusDays(i).toLocalDate().compareTo(startDate) < 0) {
-									reportRepository.save(new PreventiveTreatment(previousUsageDate.plusDays(i++), patient, treatmentType, doze, preventiveTreatmentString));
+									preventiveTreatmentRepository.save(new PreventiveTreatment(patient,previousUsageDate.plusDays(i++), null, preventiveTreatmentType, doze, preventiveTreatmentString));
 								}
 							}
 
@@ -154,8 +177,8 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 		}
 	}
 
-	static int getDoze(TreatmentType treatmentType, String doze) {
-		switch (treatmentType.getName()) {
+	static int getDoze(AbstractTreatmentType abstractTreatmentType, String doze) {
+		switch (abstractTreatmentType.getName()) {
 		case "100% oxygen via nonrebreathing mask":
 			return DEFUALT_O2_LPM;
 		case "Vitamin D3 pills":
@@ -178,11 +201,11 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 		case "Hyperventilation":
 			return DEFAULT_BPM;
 		default:
-			throw new IllegalArgumentException(doze + " doze is incorrect for type " + treatmentType);
+			throw new IllegalArgumentException(doze + " doze is incorrect for type " + abstractTreatmentType);
 		}
 	}
 
-	void saveAbortiveTreatments(String treatmentsString, LocalDateTime started, LocalDateTime stopped, String statusesString, String comments) {
+	void saveAbortiveTreatments(Attack attack, String treatmentsString, LocalDateTime started, LocalDateTime stopped, String statusesString, String comments) {
 		if (StringUtils.hasText(treatmentsString)) {
 			String[] treatmentStrings = treatmentsString.split("\\+|,");
 			String[] statusStrings = statusesString.split("/");
@@ -201,16 +224,17 @@ public class YilativsCvsDataLoader extends AbstractLoader {
 					}
 					String treatmentName = treatmentString.split("\\d")[0].trim();
 
-					TreatmentType treatmentType = treatmentName.toLowerCase().contains("oxygen") ? treatmentRepository.findByNameContainingIgnoreCase("100% oxygen via nonrebreathing mask")
-							: treatmentRepository.findByNameContainingIgnoreCase(treatmentName);
-					if (treatmentType == null)
+					AbortiveTreatmentType abstractTreatmentType = treatmentName.toLowerCase().contains("oxygen")
+							? abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("100% oxygen via nonrebreathing mask")
+							: abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase(treatmentName);
+					if (abstractTreatmentType == null)
 						continue;
-					int doze = getDoze(treatmentType, treatmentString);
-					if (treatmentType.getName().equals("100% oxygen via nonrebreathing mask") || treatmentType.getName().equals("Cardio Workout")
-							|| treatmentType.getName().equals("Hyperventilation")) {
-						reportRepository.save(new AbortiveTreatment(started, started, stopped, patient, treatmentType, doze, status, comments));
+					int doze = getDoze(abstractTreatmentType, treatmentString);
+					if (abstractTreatmentType.getName().equals("100% oxygen via nonrebreathing mask") || abstractTreatmentType.getName().equals("Cardio Workout")
+							|| abstractTreatmentType.getName().equals("Hyperventilation")) {
+						abortiveTreatmentRepository.save(new AbortiveTreatment(patient, attack, started, stopped, abstractTreatmentType, doze, status, comments));
 					} else {
-						reportRepository.save(new AbortiveTreatment(started, started, null, patient, treatmentType, doze, status, comments));
+						abortiveTreatmentRepository.save(new AbortiveTreatment(patient, attack, started, null, abstractTreatmentType, doze, status, comments));
 					}
 				} catch (RuntimeException e) {
 					logger.error("failed to save treatment string" + treatmentsString, e);

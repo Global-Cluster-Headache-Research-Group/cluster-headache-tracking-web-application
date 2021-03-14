@@ -2,21 +2,43 @@ package org.chtracker.dao.profile;
 
 import java.time.LocalDate;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Table("profile\".\"patient")
+import org.chtracker.dao.DataConfiguration;
+
+@Entity
+@Table(schema = DataConfiguration.PROFILE_SCHEMA_NAME)
 public class Patient {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotNull
+	@Size(min = 1, max = 25)
+	@NotBlank
 	private String login;
+	@Email
+	@NotBlank
 	private String email;
 	private LocalDate birthday;
+	@NotNull
 	private String name;
 	private byte[] passwordHash;
 	private short gender;
 	private boolean isBlocked;
 	private boolean isDeleted;
+
+	Patient() {
+		// needed for Hibernate (we can use private, but it will trigger Unused
+		// constructor warning
+	}
 
 	public Patient(int id, String login, String email, LocalDate birthday, String name, byte[] passwordHash, short gender, boolean isBlocked, boolean isDeleted) {
 		this.id = id;

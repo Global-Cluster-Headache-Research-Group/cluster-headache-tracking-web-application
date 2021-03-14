@@ -1,106 +1,61 @@
 package org.chtracker.dao.report;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-import org.chtracker.dao.metadata.TreatmentType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.chtracker.dao.DataConfiguration;
+import org.chtracker.dao.metadata.AbortiveTreatmentType;
 import org.chtracker.dao.profile.Patient;
 
-public class AbortiveTreatment {
+@Entity
+@Table(schema = DataConfiguration.REPORT_SCHEMA_NAME)
+public class AbortiveTreatment extends AbstractTreatment {
 
-	private LocalDateTime attackStarted;
-	private LocalDateTime started;
-	private LocalDateTime stopped;
+	@NotNull
+	@ManyToOne(optional = false)
+	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__attack_fk"))
+	private Attack attack;
 
-	private final Patient patient;
-	private final TreatmentType treatmentType;
-	private int doze;
+	@ManyToOne(optional = false)
+	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__abortive_treatment_fk"))
+	private AbortiveTreatmentType abortiveTreatmentType;
+
 	private Boolean successful;
-	private String comments;
 
-	public AbortiveTreatment(LocalDateTime attackStarted, LocalDateTime started, LocalDateTime stopped, Patient patient, TreatmentType treatmentType, int doze, Boolean successful, String comments) {
-		this.attackStarted = attackStarted;
-		this.started = started;
-		this.stopped = stopped;
-		this.patient = patient;
-		this.treatmentType = treatmentType;
-		this.doze = doze;
+	AbortiveTreatment() {
+	}
+
+	public AbortiveTreatment(Patient patient, Attack attack, LocalDateTime started, LocalDateTime stopped, AbortiveTreatmentType abortiveTreatmentType, int doze, Boolean successful, String comments) {
+		this.attack = attack;
 		this.successful = successful;
-		this.comments = comments;
+		this.setStarted(started);
+		this.setPatient(patient);
+		this.setAbortiveTreatmentType(abortiveTreatmentType);
+		this.setDoze(doze);
+		this.setComments(comments);
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((attackStarted == null) ? 0 : attackStarted.hashCode());
-		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
-		result = prime * result + ((started == null) ? 0 : started.hashCode());
-		result = prime * result + ((treatmentType == null) ? 0 : treatmentType.hashCode());
-		return result;
+	public Attack getAttack() {
+		return attack;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AbortiveTreatment other = (AbortiveTreatment) obj;
-		if (attackStarted == null) {
-			if (other.attackStarted != null)
-				return false;
-		} else if (!attackStarted.equals(other.attackStarted))
-			return false;
-		if (patient == null) {
-			if (other.patient != null)
-				return false;
-		} else if (!patient.equals(other.patient))
-			return false;
-		if (started == null) {
-			if (other.started != null)
-				return false;
-		} else if (!started.equals(other.started))
-			return false;
-		if (treatmentType == null) {
-			if (other.treatmentType != null)
-				return false;
-		} else if (!treatmentType.equals(other.treatmentType))
-			return false;
-		return true;
+	public void setAttack(Attack attack) {
+		this.attack = attack;
 	}
 
-	public LocalDateTime getStarted() {
-		return started;
+	public AbortiveTreatmentType getAbortiveTreatmentType() {
+		return abortiveTreatmentType;
 	}
 
-	public void setStarted(LocalDateTime started) {
-		this.started = started;
-	}
-
-	public LocalDateTime getStopped() {
-		return stopped;
-	}
-
-	public void setStopped(LocalDateTime stopped) {
-		this.stopped = stopped;
-	}
-
-	public LocalDateTime getAttackStarted() {
-		return attackStarted;
-	}
-
-	public void setAttackStarted(LocalDateTime attackStarted) {
-		this.attackStarted = attackStarted;
-	}
-
-	public int getDoze() {
-		return doze;
-	}
-
-	public void setDoze(int doze) {
-		this.doze = doze;
+	public void setAbortiveTreatmentType(AbortiveTreatmentType abortiveTreatmentType) {
+		this.abortiveTreatmentType = abortiveTreatmentType;
 	}
 
 	public Boolean getSuccessful() {
@@ -111,26 +66,24 @@ public class AbortiveTreatment {
 		this.successful = successful;
 	}
 
-	public String getComments() {
-		return comments;
-	}
-
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public TreatmentType getTreatmentType() {
-		return treatmentType;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(abortiveTreatmentType, attack);
+		return result;
 	}
 
 	@Override
-	public String toString() {
-		return "AbortiveTreatment [attackStarted=" + attackStarted + ", started=" + started + ", stopped=" + stopped + ", patient=" + patient + ", treatmentType=" + treatmentType + ", doze=" + doze
-				+ ", successful=" + successful + "]";
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof AbortiveTreatment))
+			return false;
+		AbortiveTreatment other = (AbortiveTreatment) obj;
+		return Objects.equals(abortiveTreatmentType, other.abortiveTreatmentType) && Objects.equals(attack, other.attack);
 	}
 
 }
