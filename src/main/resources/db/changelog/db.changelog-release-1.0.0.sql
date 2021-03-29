@@ -32,7 +32,6 @@
 -- you should have address standardizer extension as well
 --CREATE EXTENSION address_standardizer;
 
--- changeset yilativs:1 context:common failOnError: true
 --CREATE EXTENSION IF NOT EXISTS timescaledb;
 
 --in case if we will have to use UUIDs
@@ -42,14 +41,11 @@
 --https://postgis.net/docs/postgis_installation.html
 --CREATE EXTENSION IF NOT EXISTS 	postgis;
 
+-- changeset yilativs:1 context:common failOnError: true
 
---DROP SCHEMA IF EXISTS reports CASCADE; -- attacks, treatments
---DROP SCHEMA IF EXISTS metadata CASCADE; -- treatment types
---DROP SCHEMA IF EXISTS profile CASCADE; -- user profile related data: roles, privileges, passwords
-
-CREATE SCHEMA profile;
-CREATE SCHEMA metadata;
-CREATE SCHEMA report;
+CREATE SCHEMA profile; -- attacks, treatments, hormone test results, heart and motion activity
+CREATE SCHEMA metadata; -- treatment types
+CREATE SCHEMA report; -- user profile related data: roles, privileges, passwords
 
 CREATE TABLE profile.patient(
 	id SERIAL PRIMARY KEY,
@@ -57,10 +53,21 @@ CREATE TABLE profile.patient(
 	email VARCHAR(1000) ,--see how validate email https://dba.stackexchange.com/questions/68266/what-is-the-best-way-to-store-an-email-address-in-postgresql
 	birthday DATE,
 	name VARCHAR(1000) NOT NULL,
-	password_hash bytea[],
+	password_hash bytea,
 	gender SMALLINT,
 	is_blocked BOOLEAN DEFAULT FALSE,
 	is_deleted BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE report.attack (
+    id SERIAL PRIMARY KEY,
+    comments character varying(1000),
+    max_pain_level integer NOT NULL,
+    started timestamp without time zone NOT NULL,
+    stopped timestamp without time zone,
+    while_asleep boolean,
+    patient_id integer NOT NULL REFERENCES profile.patient(id),
+    CONSTRAINT attack_max_pain_level_check CHECK (((max_pain_level >= 1) AND (max_pain_level <= 10)))
 );
 
 CREATE TABLE metadata.abortive_treatment_type(
@@ -71,12 +78,34 @@ CREATE TABLE metadata.abortive_treatment_type(
     UNIQUE (name, units)
 );
 
+CREATE TABLE report.abortive_treatment (
+    id SERIAL PRIMARY KEY,
+    comments character varying(1000),
+    doze integer NOT NULL,
+    started timestamp without time zone NOT NULL,
+    stopped timestamp without time zone,
+    successful boolean,
+    patient_id integer NOT NULL REFERENCES profile.patient(id),
+    abortive_treatment_type_id integer NOT NULL REFERENCES metadata.abortive_treatment_type(id),
+    attack_id integer NOT NULL REFERENCES report.attack(id)
+);
+
 CREATE TABLE metadata.preventive_treatment_type(
 	id SERIAL PRIMARY KEY,
     name VARCHAR(1000) NOT NULL,
     units VARCHAR(200) NOT NULL,
     trade_name VARCHAR(200),
     UNIQUE (name, units)
+);
+
+CREATE TABLE report.preventive_treatment (
+    id SERIAL PRIMARY KEY,
+    comments character varying(1000),
+    doze integer NOT NULL,
+    started timestamp without time zone NOT NULL,
+    stopped timestamp without time zone,
+    patient_id integer NOT NULL REFERENCES profile.patient(id),
+    preventive_treatment_type_id integer NOT NULL REFERENCES metadata.preventive_treatment_type(id)
 );
 
 INSERT INTO metadata.abortive_treatment_type (name,units) VALUES ('100% oxygen via nonrebreathing mask','lpm');--lpm stands for litters per minute
