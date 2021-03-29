@@ -13,10 +13,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.context.ConfigurableApplicationContext;
 
-public class ClusterHeadacheRawDataLoader {
+public class ClusterHeadacheRawDataLoaderApplication {
 
 	public static void main(String[] args) throws BeansException, FileNotFoundException, IOException, ParseException, InvalidFormatException {
-		SpringApplication application = new SpringApplication(DataConfiguration.class,LoggingConfiguration.class);
+		SpringApplication application = new SpringApplication(BaseConfiguration.class,DataConfiguration.class);
 		application.setWebApplicationType(WebApplicationType.NONE);
 		ConfigurableApplicationContext context = application.run (args);
 		context.getBean(YilativsCvsDataLoader.class).load();

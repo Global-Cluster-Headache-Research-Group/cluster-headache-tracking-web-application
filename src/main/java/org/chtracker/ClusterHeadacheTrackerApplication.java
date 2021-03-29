@@ -1,13 +1,14 @@
 package org.chtracker;
 
+import org.chtracker.dao.DataConfiguration;
+import org.chtracker.web.WebMvcConfiguration;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
 public class ClusterHeadacheTrackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ClusterHeadacheTrackerApplication.class, args);
+		Class<?>[] configurations = { BaseConfiguration.class, DataConfiguration.class, WebMvcConfiguration.class };
+		SpringApplication.run(configurations, args);
 	}
 
 }
