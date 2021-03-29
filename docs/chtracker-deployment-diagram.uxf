@@ -4,7 +4,7 @@
   <element>
     <id>UMLDeployment</id>
     <coordinates>
-      <x>64</x>
+      <x>144</x>
       <y>504</y>
       <w>1080</w>
       <h>680</h>
@@ -15,7 +15,7 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>232</x>
+      <x>312</x>
       <y>960</y>
       <w>856</w>
       <h>192</h>
@@ -32,7 +32,7 @@ bg=green</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>88</x>
+      <x>168</x>
       <y>568</y>
       <w>1040</w>
       <h>344</h>
@@ -55,32 +55,60 @@ tracks blood pressure
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>392</x>
-      <y>8</y>
+      <x>472</x>
+      <y>88</y>
       <w>288</w>
-      <h>288</h>
+      <h>208</h>
     </coordinates>
     <panel_attributes>symbol=component
-WebUI</panel_attributes>
+WebUI
+--
+allows to enter and review attacks
+allows to entert and review  abortive treatments
+tracks preventive treatments
+allows to enter and review weight
+allows to enter and review height
+allows to enter and review blood pressure
+allows to enter and review hormons
+allows to enter and review blood oxygen
+allows to enter and review heart rate
+
+--
+is implemented in React
+uses Bootstrap for CSS framekork</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>768</x>
+      <x>848</x>
       <y>0</y>
-      <w>224</w>
+      <w>496</w>
       <h>296</h>
     </coordinates>
     <panel_attributes>symbol=component
 &lt;&lt;Android Application&gt;&gt;
+--
+allows to enter and review attacks
+allows to entert and review  abortive treatments
+tracks preventive treatments
+allows to enter and review weight
+allows to enter and review height
+allows to enter and review blood pressure
+allows to enter and review hormons
+allows to enter and review blood oxygen
+allows to enter and review heart rate
+tracks heart rate during sleep to predict attacks
+tracks heart movement during sleep to alarm comming attaks
+--
+is implemented in React Native
 bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>600</x>
+      <x>680</x>
       <y>320</y>
       <w>152</w>
       <h>96</h>
@@ -90,16 +118,13 @@ bg=blue</panel_attributes>
 --
 Facebook
 Google
-Tweeter
-VK
-Yandex
-bg=blue</panel_attributes>
+Twitter</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>648</x>
+      <x>728</x>
       <y>800</y>
       <w>24</w>
       <h>176</h>
@@ -110,7 +135,7 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
+      <x>528</x>
       <y>288</y>
       <w>24</w>
       <h>296</h>
@@ -122,7 +147,7 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>872</x>
+      <x>952</x>
       <y>288</y>
       <w>24</w>
       <h>296</h>
@@ -133,7 +158,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>640</x>
+      <x>720</x>
       <y>1056</y>
       <w>280</w>
       <h>88</h>
@@ -150,7 +175,7 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
+      <x>568</x>
       <y>288</y>
       <w>128</w>
       <h>128</h>
@@ -163,7 +188,7 @@ Authenticates
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>744</x>
+      <x>824</x>
       <y>288</y>
       <w>136</w>
       <h>120</h>
@@ -176,7 +201,7 @@ Authenticates
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>776</x>
+      <x>856</x>
       <y>848</y>
       <w>280</w>
       <h>72</h>
@@ -191,32 +216,9 @@ between clouds
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>424</x>
-      <y>56</y>
-      <w>224</w>
-      <h>184</h>
-    </coordinates>
-    <panel_attributes>Note..
-It can be Vue.jS
-(because it is clean and can reuse
-RestAPI for mobile app)
-or React 
-(because it is popular and can be 
-used to build
-react native UI for mobile app)
-or
-Thymeleaf
-(because it is easier to implement 
-and more secure)
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>528</x>
+      <x>608</x>
       <y>744</y>
       <w>256</w>
       <h>64</h>
@@ -232,7 +234,7 @@ bg=green</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>528</x>
+      <x>608</x>
       <y>632</y>
       <w>256</w>
       <h>64</h>
@@ -248,7 +250,7 @@ Password Recovery
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>528</x>
+      <x>608</x>
       <y>696</y>
       <w>256</w>
       <h>48</h>
@@ -262,7 +264,7 @@ Web Framework
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
+      <x>800</x>
       <y>408</y>
       <w>160</w>
       <h>240</h>
@@ -275,7 +277,7 @@ validates authentication
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1176</x>
+      <x>1256</x>
       <y>640</y>
       <w>288</w>
       <h>64</h>
@@ -289,7 +291,7 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>776</x>
+      <x>856</x>
       <y>656</y>
       <w>416</w>
       <h>40</h>
@@ -302,7 +304,7 @@ sends messages for password recovery
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>176</x>
+      <x>256</x>
       <y>384</y>
       <w>200</w>
       <h>64</h>
@@ -314,20 +316,20 @@ Nobism Data Storage</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>312</x>
+      <x>392</x>
       <y>848</y>
       <w>160</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>symbol=component
-Yilativs Data
+Yilativs Data Parser
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>312</x>
+      <x>392</x>
       <y>816</y>
       <w>160</w>
       <h>32</h>
@@ -340,31 +342,34 @@ bg=green</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>312</x>
+      <x>392</x>
       <y>776</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>symbol=component
-Nobism Data Parser</panel_attributes>
+Nobism Data Parser
+bg=red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>312</x>
+      <x>392</x>
       <y>728</y>
       <w>160</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>symbol=component
-Nobism Data Loader</panel_attributes>
+Nobism Data Loader
+--
+bg=red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
+      <x>408</x>
       <y>440</y>
       <w>24</w>
       <h>304</h>
@@ -377,7 +382,7 @@ Nobism Data Loader</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>824</x>
+      <x>904</x>
       <y>768</y>
       <w>264</w>
       <h>56</h>
@@ -392,7 +397,7 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>464</x>
+      <x>544</x>
       <y>744</y>
       <w>80</w>
       <h>40</h>
@@ -405,7 +410,7 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>776</x>
+      <x>856</x>
       <y>768</y>
       <w>64</w>
       <h>40</h>
@@ -418,14 +423,16 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1024</x>
-      <y>344</y>
+      <x>56</x>
+      <y>272</y>
       <w>200</w>
-      <h>56</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>green - implemented
 white - work in progress
-blue - will be implemented</panel_attributes>
+blue - will be implemented
+red - won't be complete
+bg=light_gray</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
