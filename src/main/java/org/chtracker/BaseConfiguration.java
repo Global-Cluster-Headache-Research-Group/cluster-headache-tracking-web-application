@@ -17,5 +17,4 @@ public class BaseConfiguration {
 	public Logger logger(InjectionPoint injectionPoint) {
 		return LoggerFactory.getLogger(injectionPoint.getMethodParameter().getContainingClass());
 	}
-	
 }
