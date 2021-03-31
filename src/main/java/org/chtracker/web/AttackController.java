@@ -1,8 +1,7 @@
 package org.chtracker.web;
 
 import org.chtracker.dao.report.Attack;
-import org.chtracker.dao.report.AttackRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.chtracker.dao.report.AttacksService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,11 +16,10 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/attacks")
 public class AttackController {
-    private final AttackRepository attackRepository;
+    private final AttacksService attacksService;
 
-    @Autowired
-    public AttackController(AttackRepository attackRepository) {
-        this.attackRepository = attackRepository;
+    public AttackController(AttacksService attacksService) {
+        this.attacksService = attacksService;
     }
 
     @GetMapping
@@ -30,15 +28,6 @@ public class AttackController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
     ) {
-        // TODO: add filterBy patient
-        if (from == null && to == null) {
-            return attackRepository.findAll(pageable);
-        } else if (from == null) {
-            return attackRepository.findAllByStartedLessThanEqual(to, pageable);
-        } else if (to == null) {
-            return attackRepository.findAllByStartedGreaterThanEqual(from, pageable);
-        } else {
-            return attackRepository.findAllByStartedBetween(from, to, pageable);
-        }
+        return this.attacksService.getAttacks(pageable, from, to);
     }
 }
