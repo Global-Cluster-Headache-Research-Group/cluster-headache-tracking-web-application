@@ -1,11 +1,13 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
+import { Pageable } from '../types/common';
+import { Attack } from '../types/attacks';
+import { AttacksService } from '../services/attacks.service';
 
 export type AttacksContextType = {
   attacks: Attack[];
   form: Form;
   pageable: Pageable;
-  dataLength?: number;
+  totalElements?: number;
   setForm(form: Form): void;
   setPageable(pageable: Pageable): void;
   submitForm(): void;
@@ -18,61 +20,28 @@ type Form = {
 
 export const AttacksContext = createContext<AttacksContextType>({} as any);
 
-type Attack = {
-  started: Date;
-  stopped: Date;
-  patient: {
-    id: number;
-    login: string;
-    email: string;
-    birthday: Date;
-    name: string;
-    gender: 1;
-  },
-  maxPainLevel: number;
-  whileAsleep: boolean;
-  comments: string;
-}
-
-type Pageable = {
-  page: number;
-  size: number;
-  sort: string;
-  direction: string;
-}
-
 export const AttacksContextProvider = (props: any) => {
   const [attacks, setAttacks] = useState<Attack[]>([]);
   const [form, setForm] = useState<{ from?: string; to?: string }>({ from: '', to: '' });
-  const [pageable, setPageable] = useState<Pageable>({ page: 0, size: 5, sort: 'started', direction: 'asc' })
-  const [dataLength, setDataLength] = useState<number | undefined>();
+  const [pageable, setPageable] = useState<Pageable>({ page: 0, size: 10, sort: 'started', direction: 'asc' })
+  const [totalElements, setTotalElements] = useState<number | undefined>();
 
-  const makeRequest = () => axios.get('http://localhost:8080/attacks', {
-    params: {
-      from: form.from ? new Date(form.from).toISOString() : undefined,
-      to: form.to ? new Date(form.to).toISOString() : undefined,
-      ...pageable,
-      sort: `${pageable.sort},${pageable.direction}`,
-    },
-  });
+
+  const submitForm = useCallback(async () => {
+    const { content, totalElements } = await AttacksService.getAttacks(pageable, form);
+    setAttacks(content);
+    setTotalElements(totalElements);
+  }, [form, pageable]);
 
   useEffect(() => {
-    makeRequest().then((r) => {
-      setAttacks(r.data.content);
-      setDataLength(r.data.totalElements);
-    });
+    submitForm();
   }, [pageable]);
-
-  const submitForm = useCallback(() => makeRequest().then((r) => {
-      setAttacks(r.data.content);
-      setDataLength(r.data.totalElements);
-    }), [form, pageable]);
 
   const contextValue = {
     attacks,
     form,
     pageable,
-    dataLength,
+    totalElements,
     setForm,
     setPageable,
     submitForm,
