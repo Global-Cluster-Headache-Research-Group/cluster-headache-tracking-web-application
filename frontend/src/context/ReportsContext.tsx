@@ -1,10 +1,10 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Pageable } from '../types/common';
-import { Attack } from '../types/attacks';
-import { AttacksService } from '../services/attacks.service';
+import { Report } from '../types/reports';
+import { ReportsService } from '../services/reports.service';
 
-export type AttacksContextType = {
-  attacks: Attack[];
+export type ReportsContextType = {
+  reports: Report[];
   form: Form;
   pageable: Pageable;
   totalElements?: number;
@@ -18,27 +18,27 @@ type Form = {
   to?: string;
 }
 
-export const AttacksContext = createContext<AttacksContextType>({} as any);
+export const ReportsContext = createContext<ReportsContextType>({} as any);
 
-export const AttacksContextProvider = (props: any) => {
-  const [attacks, setAttacks] = useState<Attack[]>([]);
+export const ReportsContextProvider = (props: any) => {
+  const [reports, setReports] = useState<Report[]>([]);
   const [form, setForm] = useState<{ from?: string; to?: string }>({ from: '', to: '' });
   const [pageable, setPageable] = useState<Pageable>({ page: 0, size: 10, sort: 'started', direction: 'asc' })
   const [totalElements, setTotalElements] = useState<number | undefined>();
 
 
-  const submitForm = useCallback(async () => {
-    const { content, totalElements } = await AttacksService.getAttacks(pageable, form);
-    setAttacks(content);
+  const submitForm = async () => {
+    const { content, totalElements } = await ReportsService.getReports(pageable, form);
+    setReports(content);
     setTotalElements(totalElements);
-  }, [form, pageable]);
+  };
 
   useEffect(() => {
     submitForm();
   }, [pageable]);
 
   const contextValue = {
-    attacks,
+    reports,
     form,
     pageable,
     totalElements,
@@ -47,8 +47,8 @@ export const AttacksContextProvider = (props: any) => {
     submitForm,
   }
   return (
-    <AttacksContext.Provider value={contextValue}>
+    <ReportsContext.Provider value={contextValue}>
       {props.children}
-    </AttacksContext.Provider>
+    </ReportsContext.Provider>
   );
 };

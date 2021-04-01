@@ -3,6 +3,7 @@ package org.chtracker.dao.report;
 import javassist.NotFoundException;
 import org.chtracker.dao.profile.Patient;
 import org.chtracker.dao.profile.PatientRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class AttacksService {
         this.patientRepository = patientRepository;
     }
 
-    public Iterable<Attack> getAttacks(Pageable pageable, LocalDateTime from, LocalDateTime to) {
+    public Page<Attack> getAttacks(Pageable pageable, LocalDateTime from, LocalDateTime to) {
         // TODO: add filterBy patient from security context
         if (from == null && to == null) {
             return attackRepository.findAll(pageable);

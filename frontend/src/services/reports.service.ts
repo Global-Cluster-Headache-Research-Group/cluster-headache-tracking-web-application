@@ -1,13 +1,13 @@
 import axios from "axios";
-import { Attack } from "../types/attacks";
+import { Report } from "../types/reports";
 import { Pageable } from "../types/common";
 
-type AttacksReponse = {
-  content: Attack[];
+type ReportsResponse = {
+  content: Report[];
   totalElements: number;
 }
 
-type NewAttack = {
+type NewReport = {
   started: string;
   stopped: string;
   comments?:
@@ -17,15 +17,16 @@ type NewAttack = {
   whileAsleep: boolean;
 }
 
-export class AttacksService {
-  private static ATTACKS_URL = 'http://localhost:8080/attacks';
+export class ReportsService {
+  // TODO: add global config
+  private static REPORTS_BASE_URL = 'http://localhost:8080/reports';
   private static isoStringOrUndefined = (date?: string) => date ? new Date(date).toISOString() : undefined;
 
-  static async getAttacks(pageable: Pageable, form: { from?: string, to?: string }): Promise<AttacksReponse> {
+  static async getReports(pageable: Pageable, form: { from?: string, to?: string }): Promise<ReportsResponse> {
     const { data: {
       content,
       totalElements,
-    } } = await axios.get<AttacksReponse>(AttacksService.ATTACKS_URL, {
+    } } = await axios.get<ReportsResponse>(ReportsService.REPORTS_BASE_URL, {
       params: {
         ...pageable,
         from: this.isoStringOrUndefined(form.from),
@@ -36,8 +37,8 @@ export class AttacksService {
     return { content, totalElements };
   }
 
-  static async addAttack(attack: NewAttack): Promise<void> {
-    await axios.post(AttacksService.ATTACKS_URL, {
+  static async addAttack(attack: NewReport): Promise<void> {
+    await axios.post(ReportsService.REPORTS_BASE_URL, {
       ...attack,
       // FIXME: this is temporary until we will have authorization
       patientId: 1,

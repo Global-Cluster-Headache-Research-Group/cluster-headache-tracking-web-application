@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Spinner } from 'react-bootstrap';
-import { AttacksService } from '../services/attacks.service';
+import { ReportsService } from '../services/reports.service';
 import DatePicker from './form/DatePicker';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   handleClose(): void;
 }
 
-const AttackForm = (props: Props) => {
+const AddReportForm = (props: Props) => {
   // FIXME: add started > stopped validation
   const [started, setStarted] = useState('');
   const [startedTime, setStartedTime] = useState('');
@@ -22,7 +22,7 @@ const AttackForm = (props: Props) => {
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     setPending(true);
-    await AttacksService.addAttack({
+    await ReportsService.addAttack({
       started: new Date(`${started} ${startedTime}`).toISOString(),
       stopped: new Date(`${stopped} ${stoppedTime}`).toISOString(),
       comments,
@@ -122,4 +122,4 @@ const AttackForm = (props: Props) => {
   );
 };
 
-export default AttackForm;
+export default AddReportForm;

@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* TODO: migrate to styled components and? sass */
+.row-expansion-style {
+  box-shadow: inset 0px 8px 10px -10px #CCC,
+              inset 0px -8px 10px -10px #CCC;
+}

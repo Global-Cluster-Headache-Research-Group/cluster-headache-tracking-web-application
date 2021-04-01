@@ -1,29 +1,24 @@
 package org.chtracker.dao.report;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import org.chtracker.dao.DataConfiguration;
 import org.chtracker.dao.metadata.AbortiveTreatmentType;
 import org.chtracker.dao.profile.Patient;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(schema = DataConfiguration.REPORT_SCHEMA_NAME)
 public class AbortiveTreatment extends AbstractTreatment {
 
 	@NotNull
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__attack_fk"))
 	private Attack attack;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__abortive_treatment_fk"))
 	private AbortiveTreatmentType abortiveTreatmentType;
 

@@ -1,16 +1,16 @@
 import { Container } from 'react-bootstrap';
 import AppNavbar from './components/AppNavbar';
-import AttacksTable from './components/Attacks';
-import { AttacksContextProvider } from './context/AttacksContext';
+import ReportsTable from './components/ReportsTable';
+import { ReportsContextProvider } from './context/ReportsContext';
 
 function App() {
   return (
     <div>
       <AppNavbar />
       <Container>
-        <AttacksContextProvider>
-          <AttacksTable />
-        </AttacksContextProvider>
+        <ReportsContextProvider>
+          <ReportsTable />
+        </ReportsContextProvider>
       </Container>
     </div>
   );

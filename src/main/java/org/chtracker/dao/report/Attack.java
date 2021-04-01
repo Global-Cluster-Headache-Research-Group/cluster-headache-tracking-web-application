@@ -1,31 +1,23 @@
 package org.chtracker.dao.report;
 
-import java.time.LocalDateTime;
+import org.chtracker.dao.DataConfiguration;
+import org.chtracker.dao.profile.Patient;
 
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.chtracker.dao.DataConfiguration;
-import org.chtracker.dao.profile.Patient;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(
-		schema = DataConfiguration.REPORT_SCHEMA_NAME, 
+		schema = DataConfiguration.REPORT_SCHEMA_NAME,
 		uniqueConstraints = { @UniqueConstraint(
 				name = "attack_uniq",
 				columnNames = { "started", "patient_id" }
-				) 
+				)
 		})
 public class Attack {
 
@@ -37,9 +29,13 @@ public class Attack {
 	private LocalDateTime started;
 	private LocalDateTime stopped;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "attack__patient_fk"))
 	private Patient patient;
+
+	@OneToMany(mappedBy = "attack", fetch = FetchType.LAZY)
+	private List<AbortiveTreatment> abortiveTreatments;
+
 	@Min(1)
 	@Max(10)
 	private int maxPainLevel;
@@ -97,12 +93,24 @@ public class Attack {
 		return comments;
 	}
 
+	public List<AbortiveTreatment> getAbortiveTreatments() {
+		return abortiveTreatments;
+	}
+
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
 
 	public Patient getPatient() {
 		return patient;
+	}
+
+	public boolean getWhileAsleep() {
+		return whileAsleep;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override
@@ -134,5 +142,4 @@ public class Attack {
 	public String toString() {
 		return "Attack [patient=" + patient + ", started=" + started + "]";
 	}
-
 }
