@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Pageable } from '../types/common';
-import { Report } from '../types/reports';
-import { ReportsService } from '../services/reports.service';
+import { AbortiveTreatmentType, Report } from '../types/reports';
+import { NewReport, ReportsService } from '../services/reports.service';
 
 export type ReportsContextType = {
   reports: Report[];
@@ -10,7 +10,9 @@ export type ReportsContextType = {
   totalElements?: number;
   setForm(form: Form): void;
   setPageable(pageable: Pageable): void;
-  submitForm(): void;
+  onSubmit(newReport: NewReport): void;
+  onSearch(): void;
+  abortiveTreatmentsTypes: AbortiveTreatmentType[];
 }
 
 type Form = {
@@ -25,16 +27,22 @@ export const ReportsContextProvider = (props: any) => {
   const [form, setForm] = useState<{ from?: string; to?: string }>({ from: '', to: '' });
   const [pageable, setPageable] = useState<Pageable>({ page: 0, size: 10, sort: 'started', direction: 'asc' })
   const [totalElements, setTotalElements] = useState<number | undefined>();
+  const [abortiveTreatmentsTypes, setAbortiveTreatmentsTypes] = useState<AbortiveTreatmentType[]>([]);
 
+  useEffect(() => {
+    ReportsService.getAbortiveTreatmentTypes().then(setAbortiveTreatmentsTypes);
+  }, []);
 
-  const submitForm = async () => {
+  const onSearch = async () => {
     const { content, totalElements } = await ReportsService.getReports(pageable, form);
     setReports(content);
     setTotalElements(totalElements);
   };
 
+  const onSubmit = (newReport: NewReport) => ReportsService.addReport(newReport);
+
   useEffect(() => {
-    submitForm();
+    onSearch();
   }, [pageable]);
 
   const contextValue = {
@@ -44,7 +52,9 @@ export const ReportsContextProvider = (props: any) => {
     totalElements,
     setForm,
     setPageable,
-    submitForm,
+    onSearch,
+    abortiveTreatmentsTypes,
+    onSubmit,
   }
   return (
     <ReportsContext.Provider value={contextValue}>

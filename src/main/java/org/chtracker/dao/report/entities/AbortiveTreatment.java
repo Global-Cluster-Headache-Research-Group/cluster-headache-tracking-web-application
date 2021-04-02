@@ -1,4 +1,4 @@
-package org.chtracker.dao.report;
+package org.chtracker.dao.report.entities;
 
 import org.chtracker.dao.DataConfiguration;
 import org.chtracker.dao.metadata.AbortiveTreatmentType;
@@ -35,6 +35,16 @@ public class AbortiveTreatment extends AbstractTreatment {
 		this.setAbortiveTreatmentType(abortiveTreatmentType);
 		this.setDoze(doze);
 		this.setComments(comments);
+	}
+
+	public AbortiveTreatment(Patient patient, Attack attack, AbortiveTreatmentType type, int doze, boolean successful) {
+		this.attack = attack;
+		this.successful = successful;
+		this.setStarted(attack.getStarted());
+		this.setPatient(patient);
+		this.setAbortiveTreatmentType(type);
+		this.setDoze(doze);
+		this.setComments(attack.getComments());
 	}
 
 	public Attack getAttack() {

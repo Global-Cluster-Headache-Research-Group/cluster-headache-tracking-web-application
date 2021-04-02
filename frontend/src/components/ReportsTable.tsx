@@ -7,7 +7,7 @@ import DatePicker from './form/DatePicker';
 import AbortiveTreatmentsTable from './AbortiveTreatmentsTable';
 import { JournalMedical, CheckCircle } from 'react-bootstrap-icons';
 import { AbortiveTreatment } from '../types/reports';
-import AddReportForm from './AddReportForm';
+import AddReportForm from './addReport/AddReportForm';
 
 const columns: ColumnDescription[] = [
   {
@@ -69,7 +69,9 @@ const ReportsTable = () => {
     totalElements,
     setForm,
     setPageable,
-    submitForm,
+    onSearch,
+    onSubmit,
+    abortiveTreatmentsTypes,
   } = useContext<ReportsContextType>(ReportsContext);
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -118,7 +120,7 @@ const ReportsTable = () => {
                 />
               </Form.Group>
               <Form.Group>
-                <Button variant="primary" onClick={submitForm} >
+                <Button variant="primary" onClick={onSearch} >
                   Search
                 </Button>
               </Form.Group>
@@ -141,10 +143,15 @@ const ReportsTable = () => {
               />
             </div>
           </Row>
-          <AddReportForm
-            show={showAddForm}
-            handleClose={() => setShowAddForm(false)}
-          />
+
+          {showAddForm &&
+            <AddReportForm
+              show={showAddForm}
+              onClose={() => setShowAddForm(false)}
+              onAdd={onSubmit}
+              abortiveTreatmentsTypes={abortiveTreatmentsTypes}
+            />
+          }
         </div>
       )}
     </PaginationProvider>

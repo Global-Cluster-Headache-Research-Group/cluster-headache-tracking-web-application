@@ -1,9 +1,9 @@
 package org.chtracker.web;
 
 import javassist.NotFoundException;
-import org.chtracker.dao.report.AttacksService;
-import org.chtracker.web.dto.AddAttackDto;
-import org.chtracker.web.dto.ReportDto;
+import org.chtracker.application.report.ReportsService;
+import org.chtracker.application.report.dtos.AddReportDto;
+import org.chtracker.application.report.dtos.ReportDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,15 +18,15 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/reports")
 public class ReportsController {
-    private final AttacksService attacksService;
+    private final ReportsService reportsService;
 
-    public ReportsController(AttacksService attacksService) {
-        this.attacksService = attacksService;
+    public ReportsController(ReportsService reportsService) {
+        this.reportsService = reportsService;
     }
 
     @PostMapping
-    public void reportAttack(@Valid @RequestBody AddAttackDto dto) throws NotFoundException {
-        this.attacksService.addAttack(dto.started, dto.stopped, dto.patientId, dto.maxPainLevel, dto.whileAsleep, dto.comments);
+    public void reportAttack(@Valid @RequestBody AddReportDto dto) throws NotFoundException {
+        this.reportsService.addReport(dto);
     }
 
     @GetMapping
@@ -35,6 +35,6 @@ public class ReportsController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
     ) {
-        return this.attacksService.getAttacks(pageable, from, to).map(ReportDto::new);
+        return this.reportsService.getReports(pageable, from, to);
     }
 }

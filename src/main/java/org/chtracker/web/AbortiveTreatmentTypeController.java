@@ -20,8 +20,8 @@ public class AbortiveTreatmentTypeController {
 		this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
 	}
 
-	@GetMapping("/")
-	public Iterable<AbortiveTreatmentType> getPrevetiveTreatmentTypes() {
+	@GetMapping()
+	public Iterable<AbortiveTreatmentType> getAbortiveTreatmentTypes() {
 		return abortiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
 	}
 

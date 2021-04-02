@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Modal, Row, Spinner } from 'react-bootstrap';
-import { ReportsService } from '../services/reports.service';
-import DatePicker from './form/DatePicker';
+import { NewReport } from '../../services/reports.service';
+import { AbortiveTreatmentType } from '../../types/reports';
+import DatePicker from '../form/DatePicker';
+import AbortiveTreatmentFormTable, { UsedTreatment } from './AbortiveTreatmentFormTable';
 
 type Props = {
   show: boolean;
-  handleClose(): void;
+  onClose(): void;
+  onAdd(newReport: NewReport): void;
+  abortiveTreatmentsTypes: AbortiveTreatmentType[];
 }
 
 const AddReportForm = (props: Props) => {
@@ -18,33 +22,42 @@ const AddReportForm = (props: Props) => {
   const [maxPainLevel, setMaxPainLevel] = useState(1);
   const [comments, setComments] = useState('');
   const [isPending, setPending] = useState(false);
+  const [usedTreatments, setUsedTreatments] = useState<NewReport['usedTreatments']>([]);
 
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     setPending(true);
-    await ReportsService.addAttack({
+    props.onAdd({
       started: new Date(`${started} ${startedTime}`).toISOString(),
       stopped: new Date(`${stopped} ${stoppedTime}`).toISOString(),
       comments,
       whileAsleep,
       maxPainLevel,
+      usedTreatments,
     });
     setPending(false);
-    props.handleClose();
+    props.onClose();
   };
+
+  const handleUsedTreatmentsChange = (l: UsedTreatment[]) => setUsedTreatments(l.map(i => ({
+    id: +i.usedTreatmentId,
+    doze: +i.doze,
+    successful: Boolean(i.successful),
+  })));
 
   return (
     <Modal
       show={props.show}
-      onHide={props.handleClose}
+      onHide={props.onClose}
       backdrop="static"
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Add attack</Modal.Title>
+        <Modal.Title>Add new report</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleFormSubmit}>
         <Modal.Body>
+          <h6>Attack details</h6>
           <Form.Group>
             <Row>
               <Col>
@@ -91,7 +104,7 @@ const AddReportForm = (props: Props) => {
               </Col>
             </Row>
           </Form.Group>
-          <Form.Group controlId="formBasicRange">
+          <Form.Group>
             <Form.Label>Max pain level <strong>{maxPainLevel}</strong></Form.Label>
             <Form.Control
               type="range"
@@ -99,16 +112,24 @@ const AddReportForm = (props: Props) => {
               max={10}
               value={maxPainLevel}
               onChange={e => setMaxPainLevel(+e.target.value)}
+              style={{ color: 'red' }}
             />
           </Form.Group>
-          <Form.Check
-            checked={whileAsleep}
-            onChange={() => setWhileAsleep(!whileAsleep)}
-            type="checkbox"
-            label="While asleep"
+          <Form.Group>
+            <Form.Check
+              checked={whileAsleep}
+              onChange={() => setWhileAsleep(!whileAsleep)}
+              type="checkbox"
+              label="While asleep"
+            />
+          </Form.Group>
+          <h6>Used abortive treatments</h6>
+          <AbortiveTreatmentFormTable
+            onChange={handleUsedTreatmentsChange}
+            abortiveTreatmentTypes={props.abortiveTreatmentsTypes}
           />
-          <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Comments</Form.Label>
+          <h6>Comments</h6>
+          <Form.Group>
             <Form.Control as="textarea" rows={5} value={comments} onChange={e => setComments(e.target.value)} />
           </Form.Group>
         </Modal.Body>

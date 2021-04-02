@@ -1,7 +1,7 @@
-package org.chtracker.web.dto;
+package org.chtracker.application.report.dtos;
 
-import org.chtracker.dao.report.AbortiveTreatment;
-import org.chtracker.dao.report.Attack;
+import org.chtracker.dao.report.entities.AbortiveTreatment;
+import org.chtracker.dao.report.entities.Attack;
 
 import java.time.LocalDateTime;
 import java.util.List;

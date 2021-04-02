@@ -15,3 +15,10 @@ export type AbortiveTreatment = {
   successful: boolean;
   doze: number;
 }
+
+export type AbortiveTreatmentType = {
+  id: number;
+  name: string;
+  units: string;
+  tradeName: string;
+}

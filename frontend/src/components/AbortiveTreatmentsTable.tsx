@@ -34,17 +34,15 @@ const columns: ColumnDescription[] = [
   },
 ];
 
-const AbortiveTreatmentsTable = (props: Props) => {
-  return (
-    <div>
-      <h6>Used abortive treatments</h6>
-      <BootstrapTable
-        keyField="name"
-        columns={columns}
-        data={props.list}
-      />
-    </div>
-  )
-};
+const AbortiveTreatmentsTable = (props: Props) => (
+  <div>
+    <h6>Used abortive treatments</h6>
+    <BootstrapTable
+      keyField="name"
+      columns={columns}
+      data={props.list}
+    />
+  </div>
+);
 
 export default AbortiveTreatmentsTable;

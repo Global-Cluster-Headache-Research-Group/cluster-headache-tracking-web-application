@@ -1,6 +1,7 @@
-package org.chtracker.dao.report;
+package org.chtracker.dao.report.repositories;
 
 import org.chtracker.dao.profile.Patient;
+import org.chtracker.dao.report.entities.Attack;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

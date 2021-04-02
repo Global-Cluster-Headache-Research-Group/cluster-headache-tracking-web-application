@@ -1,4 +1,4 @@
-package org.chtracker.dao.report;
+package org.chtracker.dao.report.entities;
 
 import org.chtracker.dao.DataConfiguration;
 import org.chtracker.dao.profile.Patient;
@@ -95,6 +95,10 @@ public class Attack {
 
 	public List<AbortiveTreatment> getAbortiveTreatments() {
 		return abortiveTreatments;
+	}
+
+	public void setAbortiveTreatments(List<AbortiveTreatment> abortiveTreatments) {
+		this.abortiveTreatments = abortiveTreatments;
 	}
 
 	public void setComments(String comments) {
