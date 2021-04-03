@@ -1,16 +1,16 @@
 package org.chtracker.application.report;
 
 import javassist.NotFoundException;
+import org.chtracker.application.report.dtos.AddReportDto;
+import org.chtracker.application.report.dtos.ReportDto;
 import org.chtracker.dao.metadata.AbortiveTreatmentType;
 import org.chtracker.dao.metadata.AbortiveTreatmentTypeRepository;
 import org.chtracker.dao.profile.Patient;
 import org.chtracker.dao.profile.PatientRepository;
-import org.chtracker.application.report.dtos.ReportDto;
 import org.chtracker.dao.report.entities.AbortiveTreatment;
 import org.chtracker.dao.report.entities.Attack;
 import org.chtracker.dao.report.repositories.AbortiveTreatmentRepository;
 import org.chtracker.dao.report.repositories.AttackRepository;
-import org.chtracker.application.report.dtos.AddReportDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
