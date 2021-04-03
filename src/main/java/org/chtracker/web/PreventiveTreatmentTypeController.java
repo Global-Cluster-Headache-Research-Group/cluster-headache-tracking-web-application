@@ -21,7 +21,7 @@ public class PreventiveTreatmentTypeController {
 	}
 
 	@GetMapping("/")
-	public Iterable<PreventiveTreatmentType> getPrevetiveTreatmentTypes() {
+	public Iterable<PreventiveTreatmentType> findAll() {
 		return preventiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
 	}
 

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,12 +15,15 @@ import org.chtracker.dao.DataConfiguration;
 import org.chtracker.dao.metadata.AbortiveTreatmentType;
 import org.chtracker.dao.profile.Patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(schema = DataConfiguration.REPORT_SCHEMA_NAME)
 public class AbortiveTreatment extends AbstractTreatment {
 
+	@JsonIgnore
 	@NotNull
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__attack_fk"))
 	private Attack attack;
 

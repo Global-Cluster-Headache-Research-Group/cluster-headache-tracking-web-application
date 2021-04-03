@@ -1,7 +1,10 @@
 package org.chtracker.dao.report;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -18,6 +22,8 @@ import javax.validation.constraints.Size;
 
 import org.chtracker.dao.DataConfiguration;
 import org.chtracker.dao.profile.Patient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(
@@ -36,7 +42,8 @@ public class Attack {
 	@NotNull
 	private LocalDateTime started;
 	private LocalDateTime stopped;
-
+	
+	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(foreignKey = @ForeignKey(name = "attack__patient_fk"))
 	private Patient patient;
@@ -46,6 +53,9 @@ public class Attack {
 	private Boolean whileAsleep;
 	@Size(max = 1000)
 	private String comments;
+	
+	@OneToMany(mappedBy = "attack",cascade = CascadeType.ALL,orphanRemoval = true)
+	private Collection<AbortiveTreatment> abortiveTreatments = new ArrayList<>();
 
 	Attack() {
 		// needed for Hibernate (we can use private, but it will trigger Unused
@@ -59,6 +69,20 @@ public class Attack {
 		this.maxPainLevel = maxPainLevel;
 		this.whileAsleep = whileAsleep;
 		this.comments = comments;
+	}
+	
+	public void addAbortiveTreatment(AbortiveTreatment abortiveTreatment) {
+		abortiveTreatments.add(abortiveTreatment);
+		abortiveTreatment.setAttack(this);
+	}
+	
+	public void removeAbortiveTreatment(AbortiveTreatment abortiveTreatment) {
+		abortiveTreatments.remove(abortiveTreatment);
+		abortiveTreatment.setAttack(null);
+	}
+	
+	public Collection<AbortiveTreatment> getAbortiveTreatments() {
+		return abortiveTreatments;
 	}
 
 	public LocalDateTime getStarted() {

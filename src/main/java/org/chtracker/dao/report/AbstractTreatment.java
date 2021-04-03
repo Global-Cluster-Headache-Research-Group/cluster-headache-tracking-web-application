@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 
 import org.chtracker.dao.profile.Patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @MappedSuperclass
 public abstract class AbstractTreatment {
 
@@ -25,6 +27,7 @@ public abstract class AbstractTreatment {
 	private LocalDateTime started;
 	private LocalDateTime stopped;
 
+	@JsonIgnore
 	@ManyToOne(optional = false)
 	private Patient patient;
 

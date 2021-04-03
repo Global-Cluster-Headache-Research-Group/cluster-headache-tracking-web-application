@@ -21,7 +21,7 @@ public class AbortiveTreatmentTypeController {
 	}
 
 	@GetMapping("/")
-	public Iterable<AbortiveTreatmentType> getPrevetiveTreatmentTypes() {
+	public Iterable<AbortiveTreatmentType> findAll() {
 		return abortiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
 	}
 
