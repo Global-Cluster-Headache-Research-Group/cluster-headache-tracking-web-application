@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.MethodParameter;
+import org.springframework.util.Assert;
 
 @EnableAutoConfiguration
 @Configuration
@@ -15,7 +17,9 @@ public class BaseConfiguration {
 	@Bean
 	@Scope("prototype")
 	public Logger logger(InjectionPoint injectionPoint) {
-		return LoggerFactory.getLogger(injectionPoint.getMethodParameter().getContainingClass());
+		MethodParameter methodParameter = injectionPoint.getMethodParameter();
+		Assert.notNull(methodParameter, "method parameter is expected to be non null");
+		return LoggerFactory.getLogger(methodParameter.getContainingClass());
 	}
-	
+
 }

@@ -1,7 +1,6 @@
 package org.chtracker.dao.loader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @ConditionalOnNotWebApplication
-public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
+public class PaviaAndersonMyHeadacheLogDataLoader extends DataLoader {
 
 	private final Map<Integer, LocalDateTime> idToStart = new HashedMap<>();
 	private final Map<Integer, LocalDateTime> idToEnd = new HashedMap<>();
@@ -68,7 +67,7 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 			AbortiveTreatmentRepository abortiveTreatmentRepository,
 			PreventiveTreatmentRepository preventiveTreatmentRepository,
 			PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository,
-			Logger Logger) {
+			Logger logger) {
 		this.attackRepository = attackRepository;
 		this.abortiveTreatmentRepository = abortiveTreatmentRepository;
 		this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
@@ -77,11 +76,11 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 		this.preventiveTreatmentTypeRepository = preventiveTreatmentTypeRepository;
 		this.patientRepository = patientRepository;
 		patient = this.patientRepository.findByLogin("pavias");
-		this.logger = Logger;
+		this.logger = logger;
 	}
 
 	@Transactional
-	public synchronized void load() throws FileNotFoundException, IOException, InvalidFormatException {
+	public synchronized void load() throws  IOException, InvalidFormatException {
 		if (attacksDataPath == null) {
 			throw new IllegalStateException("Attacks data can not be loaded: attacks.pavia.path is not specified");
 		}
@@ -106,7 +105,7 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 			int id = (int) row.getCell(TreatmentSheetColumn.ID.ordinal()).getNumericCellValue();
 			LocalDateTime start = row.getCell(TreatmentSheetColumn.START.ordinal()).getLocalDateTimeCellValue();
 			String treatment = row.getCell(TreatmentSheetColumn.TREATMENT.ordinal()).getStringCellValue();
-			Boolean successful = "yes".equals(row.getCell(TreatmentSheetColumn.TREATMENT_HELPED.ordinal()).getStringCellValue().trim().toLowerCase());
+			Boolean successful = "yes".equalsIgnoreCase(row.getCell(TreatmentSheetColumn.TREATMENT_HELPED.ordinal()).getStringCellValue().trim());
 			saveTreatment(id, start, treatment, successful);
 		}
 	}
@@ -137,7 +136,7 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 		Attack attack = idToAttack.get(attackId);
 
 		if (treatmentStart.compareTo(attackEnd) >= 0) {
-			logger.debug("treatment started affter attack stopped for attack id=" + attackId + " and treatment=" + treatment);
+			logger.debug("treatment started affter attack stopped for attack id={} and treatment={}", attackId, treatment);
 			treatmentStart = attackEnd.minusMinutes(5);
 		}
 		try {
@@ -178,10 +177,6 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 			} else if (treatment.startsWith("Neurostimulans")) {
 				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("SPG Neurostimulator");
 				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, treatmentStart.plusMinutes(15),  type, 15 * 60, successful, null));
-				
-				//we won't consider it preventive so far
-				//PreventiveTreatmentType preventiveType = preventiveTreatmentTypeRepository.findByNameContainingIgnoreCase("SPG Neurostimulator");
-				//preventiveTreatmentRepository.save(new PreventiveTreatment(patient, treatmentStart, null, preventiveType, 15 * 60, treatment));
 			} else if (treatment.startsWith("Gon blokade - 2 ml + 0,5")) {
 				AbortiveTreatmentType type = abortiveTreatmentTypeRepository.findByNameContainingIgnoreCase("Betamethasone");
 				abortiveTreatmentRepository.save(new AbortiveTreatment(patient,attack, treatmentStart, treatmentStart.plusMinutes(15),  type, 500, successful, null));
@@ -190,7 +185,7 @@ public class PaviaAndersonMyHeadacheLogDataLoader extends AbstractLoader {
 			}
 
 		} catch (RuntimeException e) {
-			logger.error("eror while handling treatment for attackId=" + attackId + " " + treatmentStart + " " + treatment + " " + successful);
+			logger.error("eror while handling treatment for attackId={} treatmentStart={} successful={}", attackId, treatmentStart ,successful );
 			throw e;
 		}
 

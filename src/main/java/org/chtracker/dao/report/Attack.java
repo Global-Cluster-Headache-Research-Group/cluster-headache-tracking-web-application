@@ -125,9 +125,7 @@ public class Attack {
 		Attack other = (Attack) obj;
 		if (!patient.equals(other.patient))
 			return false;
-		if (!started.equals(other.started))
-			return false;
-		return true;
+		return started.equals(other.started);
 	}
 
 	@Override

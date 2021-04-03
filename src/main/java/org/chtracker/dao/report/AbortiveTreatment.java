@@ -32,10 +32,12 @@ public class AbortiveTreatment extends AbstractTreatment {
 	AbortiveTreatment() {
 	}
 
+	@SuppressWarnings("java:S107")
 	public AbortiveTreatment(Patient patient, Attack attack, LocalDateTime started, LocalDateTime stopped, AbortiveTreatmentType abortiveTreatmentType, int doze, Boolean successful, String comments) {
 		this.attack = attack;
 		this.successful = successful;
 		this.setStarted(started);
+		this.setStopped(stopped);
 		this.setPatient(patient);
 		this.setAbortiveTreatmentType(abortiveTreatmentType);
 		this.setDoze(doze);

@@ -35,23 +35,6 @@ public class Patient {
 	private boolean isBlocked;
 	private boolean isDeleted;
 
-	Patient() {
-		// needed for Hibernate (we can use private, but it will trigger Unused
-		// constructor warning
-	}
-
-	public Patient(int id, String login, String email, LocalDate birthday, String name, byte[] passwordHash, short gender, boolean isBlocked, boolean isDeleted) {
-		this.id = id;
-		this.login = login;
-		this.email = email;
-		this.birthday = birthday;
-		this.name = name;
-		this.passwordHash = passwordHash;
-		this.gender = gender;
-		this.isBlocked = isBlocked;
-		this.isDeleted = isDeleted;
-	}
-
 	public String getLogin() {
 		return login;
 	}

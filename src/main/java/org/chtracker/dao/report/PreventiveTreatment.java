@@ -26,6 +26,7 @@ public class PreventiveTreatment extends AbstractTreatment {
 
 	public PreventiveTreatment(Patient patient, LocalDateTime started, LocalDateTime stopped, PreventiveTreatmentType preventiveTreatmentType, int doze, String comments) {
 		this.setStarted(started);
+		this.setStopped(stopped);
 		this.setPatient(patient);
 		this.setPrevetiveTreatmentType(preventiveTreatmentType);
 		this.setDoze(doze);

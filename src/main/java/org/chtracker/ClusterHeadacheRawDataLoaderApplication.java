@@ -1,8 +1,6 @@
 package org.chtracker;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.chtracker.dao.DataConfiguration;
@@ -15,7 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 public class ClusterHeadacheRawDataLoaderApplication {
 
-	public static void main(String[] args) throws BeansException, FileNotFoundException, IOException, ParseException, InvalidFormatException {
+	public static void main(String[] args) throws BeansException,  IOException,  InvalidFormatException {
 		SpringApplication application = new SpringApplication(BaseConfiguration.class,DataConfiguration.class);
 		application.setWebApplicationType(WebApplicationType.NONE);
 		ConfigurableApplicationContext context = application.run (args);
