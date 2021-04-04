@@ -1,4 +1,4 @@
-package org.chtracker.dao.report;
+package org.chtracker.dao.report.entities;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class AbortiveTreatment extends AbstractTreatment {
 	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__attack_fk"))
 	private Attack attack;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__abortive_treatment_fk"))
 	private AbortiveTreatmentType abortiveTreatmentType;
 
@@ -46,6 +46,16 @@ public class AbortiveTreatment extends AbstractTreatment {
 		this.setAbortiveTreatmentType(abortiveTreatmentType);
 		this.setDoze(doze);
 		this.setComments(comments);
+	}
+
+	public AbortiveTreatment(Patient patient, Attack attack, AbortiveTreatmentType type, int doze, boolean successful) {
+		this.attack = attack;
+		this.successful = successful;
+		this.setStarted(attack.getStarted());
+		this.setPatient(patient);
+		this.setAbortiveTreatmentType(type);
+		this.setDoze(doze);
+		this.setComments(attack.getComments());
 	}
 
 	public Attack getAttack() {

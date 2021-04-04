@@ -1,0 +1,1588 @@
+[
+    {
+        "attackId": 865,
+        "started": "2020-04-01T00:10:00",
+        "stopped": "2020-04-01T00:20:00",
+        "maxPainLevel": 4,
+        "comments": "I managed to shake off the pain with tabata (this was first attack in 3 days, I hope it's getting better)",
+        "usedAbortiveTreatments": [
+            {
+                "name": "Cardio Workout",
+                "tradeName": null,
+                "units": "bpm",
+                "successful": true,
+                "doze": 150
+            }
+        ]
+    },
+    {
+        "attackId": 866,
+        "started": "2020-04-01T05:30:00",
+        "stopped": "2020-04-01T05:40:00",
+        "maxPainLevel": 4,
+        "comments": "I managed to shake off the pain with tabata",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 867,
+        "started": "2020-04-01T07:30:00",
+        "stopped": "2020-04-01T07:35:00",
+        "maxPainLevel": 4,
+        "comments": "I managed to shake off the pain with tabata",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 868,
+        "started": "2020-04-04T22:00:00",
+        "stopped": "2020-04-04T22:05:00",
+        "maxPainLevel": 4,
+        "comments": "I managed to shake off the pain with tabata",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 869,
+        "started": "2020-04-07T09:30:00",
+        "stopped": "2020-04-07T09:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 870,
+        "started": "2020-04-10T08:45:00",
+        "stopped": "2020-04-10T08:50:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 871,
+        "started": "2020-04-11T09:30:00",
+        "stopped": "2020-04-11T09:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 872,
+        "started": "2020-04-12T04:30:00",
+        "stopped": "2020-04-12T04:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 873,
+        "started": "2020-09-16T08:30:00",
+        "stopped": "2020-09-16T08:50:00",
+        "maxPainLevel": 4,
+        "comments": "started when I was on Fiolent",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 874,
+        "started": "2020-09-25T11:00:00",
+        "stopped": "2020-09-25T11:15:00",
+        "maxPainLevel": 2,
+        "comments": "at first I thought it was because of masking pressing to hard on my scul",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 875,
+        "started": "2020-09-30T12:00:00",
+        "stopped": "2020-09-30T12:20:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 876,
+        "started": "2020-10-16T12:00:00",
+        "stopped": "2020-10-16T12:15:00",
+        "maxPainLevel": 4,
+        "comments": "pain was quite hard and I decided to take Oxygen it helped in 2 minutes",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 877,
+        "started": "2020-10-17T01:30:00",
+        "stopped": "2020-10-17T01:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 878,
+        "started": "2020-10-17T03:30:00",
+        "stopped": "2020-10-17T03:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 879,
+        "started": "2020-10-18T03:00:00",
+        "stopped": "2020-10-18T03:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 880,
+        "started": "2020-10-18T06:15:00",
+        "stopped": "2020-10-18T06:20:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 881,
+        "started": "2020-10-18T09:00:00",
+        "stopped": "2020-10-18T09:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 882,
+        "started": "2020-10-19T03:20:00",
+        "stopped": "2020-10-19T03:40:00",
+        "maxPainLevel": 2,
+        "comments": "pain wasn't hard so I didn't take Oxygen and fall asleep",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 883,
+        "started": "2020-10-19T12:30:00",
+        "stopped": "2020-10-19T12:50:00",
+        "maxPainLevel": 4,
+        "comments": "pain was light but then become harder and I decided to try Oxygen",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 884,
+        "started": "2020-10-23T01:40:00",
+        "stopped": "2020-10-23T01:50:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 885,
+        "started": "2020-10-23T07:50:00",
+        "stopped": "2020-10-23T08:00:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 886,
+        "started": "2020-10-23T12:50:00",
+        "stopped": "2020-10-23T13:05:00",
+        "maxPainLevel": 4,
+        "comments": "pain wasn't hard but I had to bried twice",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 887,
+        "started": "2020-10-23T17:10:00",
+        "stopped": "2020-10-23T17:15:00",
+        "maxPainLevel": 6,
+        "comments": "i was on the football field with kids with it started, had to run to walk to my car to get Oxygen",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 888,
+        "started": "2020-10-24T03:00:00",
+        "stopped": "2020-10-24T03:10:00",
+        "maxPainLevel": 2,
+        "comments": "pain was light and I fall asleep",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 889,
+        "started": "2020-10-24T16:30:00",
+        "stopped": "2020-10-24T16:40:00",
+        "maxPainLevel": 6,
+        "comments": "happen while I was training kids",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 890,
+        "started": "2020-10-24T16:45:00",
+        "stopped": "2020-10-24T16:50:00",
+        "maxPainLevel": 6,
+        "comments": "happen while I was training kids (2nd attack)",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 891,
+        "started": "2020-10-24T22:00:00",
+        "stopped": "2020-10-24T22:05:00",
+        "maxPainLevel": 2,
+        "comments": "pain was between 1 and 2",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 892,
+        "started": "2020-10-25T00:48:00",
+        "stopped": "2020-10-25T00:51:00",
+        "maxPainLevel": 2,
+        "comments": "pain was between 1 and 2 pain vanished fast",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 893,
+        "started": "2020-10-26T05:50:00",
+        "stopped": "2020-10-26T05:53:00",
+        "maxPainLevel": 4,
+        "comments": "the pain was light but still disturbing. Before going to sleep I made a UVB full body exposure.",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 894,
+        "started": "2020-10-26T08:20:00",
+        "stopped": "2020-10-26T08:23:00",
+        "maxPainLevel": 4,
+        "comments": "the pain was light but still disturbing",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 895,
+        "started": "2020-10-26T12:00:00",
+        "stopped": "2020-10-26T12:03:00",
+        "maxPainLevel": 4,
+        "comments": "the pain was light but still disturbing",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 896,
+        "started": "2020-10-26T20:15:00",
+        "stopped": "2020-10-26T20:25:00",
+        "maxPainLevel": 4,
+        "comments": "pain was light but didn't let go for long, perhaps because i didn't start for long",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 897,
+        "started": "2020-10-26T22:15:00",
+        "stopped": "2020-10-26T22:18:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 898,
+        "started": "2020-10-27T05:50:00",
+        "stopped": "2020-10-27T06:00:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 899,
+        "started": "2020-10-28T05:50:00",
+        "stopped": "2020-10-28T06:00:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 900,
+        "started": "2020-10-28T08:30:00",
+        "stopped": "2020-10-28T08:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 901,
+        "started": "2020-10-29T08:30:00",
+        "stopped": "2020-10-29T08:50:00",
+        "maxPainLevel": 2,
+        "comments": "I decided not to take Oxygen and it worked, seems cluster pain is not too painful this time",
+        "usedAbortiveTreatments": [
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            },
+            {
+                "name": "Cardio Workout",
+                "tradeName": null,
+                "units": "bpm",
+                "successful": true,
+                "doze": 150
+            }
+        ]
+    },
+    {
+        "attackId": 902,
+        "started": "2020-10-29T20:45:00",
+        "stopped": "2020-10-29T20:50:00",
+        "maxPainLevel": 4,
+        "comments": "this time I tied not to bried Oxygen but it was too painful to tolerate",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 903,
+        "started": "2020-10-30T03:00:00",
+        "stopped": "2020-10-30T03:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 904,
+        "started": "2020-10-30T06:00:00",
+        "stopped": "2020-10-30T06:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 905,
+        "started": "2020-10-30T08:30:00",
+        "stopped": "2020-10-30T08:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 906,
+        "started": "2020-10-30T20:00:00",
+        "stopped": "2020-10-30T20:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 907,
+        "started": "2020-10-31T06:00:00",
+        "stopped": "2020-10-31T06:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 908,
+        "started": "2020-10-31T08:30:00",
+        "stopped": "2020-10-31T08:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 909,
+        "started": "2020-10-31T20:40:00",
+        "stopped": "2020-10-31T20:45:00",
+        "maxPainLevel": 4,
+        "comments": "tried not to brief but failed",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 910,
+        "started": "2020-11-01T06:00:00",
+        "stopped": "2020-11-01T06:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 911,
+        "started": "2020-11-01T08:30:00",
+        "stopped": "2020-11-01T08:40:00",
+        "maxPainLevel": 4,
+        "comments": "5 mins wasn't enoug and I had to run to my car for the key to move regulator on a new tank with Oxygen",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 912,
+        "started": "2020-11-01T10:00:00",
+        "stopped": "2020-11-01T10:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 913,
+        "started": "2020-11-02T07:50:00",
+        "stopped": "2020-11-02T07:55:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 914,
+        "started": "2020-11-02T08:45:00",
+        "stopped": "2020-11-02T08:55:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 915,
+        "started": "2020-11-02T09:40:00",
+        "stopped": "2020-11-02T09:43:00",
+        "maxPainLevel": 2,
+        "comments": "it tried to start again and I decied to abort attack with Oxygen",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            },
+            {
+                "name": "Cardio Workout",
+                "tradeName": null,
+                "units": "bpm",
+                "successful": true,
+                "doze": 150
+            }
+        ]
+    },
+    {
+        "attackId": 916,
+        "started": "2020-11-02T10:45:00",
+        "stopped": "2020-11-02T10:49:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 917,
+        "started": "2020-11-03T03:00:00",
+        "stopped": "2020-11-03T03:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 918,
+        "started": "2020-11-03T06:00:00",
+        "stopped": "2020-11-03T06:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 919,
+        "started": "2020-11-03T08:45:00",
+        "stopped": "2020-11-03T08:50:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 920,
+        "started": "2020-11-03T10:45:00",
+        "stopped": "2020-11-03T11:00:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 921,
+        "started": "2020-11-03T21:45:00",
+        "stopped": "2020-11-03T21:50:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 922,
+        "started": "2020-11-04T08:30:00",
+        "stopped": "2020-11-04T08:35:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 923,
+        "started": "2020-11-05T03:00:00",
+        "stopped": "2020-11-05T03:10:00",
+        "maxPainLevel": 4,
+        "comments": "pain was light seems cluster is fading",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 924,
+        "started": "2020-11-08T12:00:00",
+        "stopped": "2020-11-08T12:05:00",
+        "maxPainLevel": 4,
+        "comments": "pain was light but I decided to brief ",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            },
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 925,
+        "started": "2020-11-09T05:00:00",
+        "stopped": "2020-11-09T05:05:00",
+        "maxPainLevel": 2,
+        "comments": "pain was light but I decided to brief because it didn't let me fall asleep",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 926,
+        "started": "2020-11-09T09:00:00",
+        "stopped": "2020-11-09T09:10:00",
+        "maxPainLevel": 4,
+        "comments": "pain was also light, hopefully it will vanish soon",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 928,
+        "started": "2020-11-10T10:30:00",
+        "stopped": "2020-11-10T10:32:00",
+        "maxPainLevel": 2,
+        "comments": "i decided to abort attack to continue to work",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            },
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 929,
+        "started": "2020-11-13T05:00:00",
+        "stopped": "2020-11-13T05:02:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 930,
+        "started": "2020-11-13T06:30:00",
+        "stopped": "2020-11-13T06:32:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 931,
+        "started": "2020-11-13T09:00:00",
+        "stopped": "2020-11-13T09:02:00",
+        "maxPainLevel": 4,
+        "comments": "the attacks didn't let me rest well and because of it I had shadows and was sleepy all day",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            },
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 932,
+        "started": "2020-11-15T03:00:00",
+        "stopped": "2020-11-15T03:02:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 933,
+        "started": "2020-11-15T05:00:00",
+        "stopped": "2020-11-15T05:02:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 934,
+        "started": "2020-11-19T05:00:00",
+        "stopped": "2020-11-19T05:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 935,
+        "started": "2020-11-19T07:45:00",
+        "stopped": "2020-11-19T07:55:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 936,
+        "started": "2020-11-21T06:00:00",
+        "stopped": "2020-11-21T06:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 937,
+        "started": "2020-11-21T07:45:00",
+        "stopped": "2020-11-21T07:55:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 938,
+        "started": "2020-11-22T06:00:00",
+        "stopped": "2020-11-22T06:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 939,
+        "started": "2020-11-22T07:45:00",
+        "stopped": "2020-11-22T07:55:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 941,
+        "started": "2020-11-22T11:30:00",
+        "stopped": "2020-11-22T11:35:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 940,
+        "started": "2020-11-22T18:00:00",
+        "stopped": "2020-11-22T18:10:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 942,
+        "started": "2020-11-23T06:00:00",
+        "stopped": "2020-11-23T06:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 943,
+        "started": "2020-11-23T08:30:00",
+        "stopped": "2020-11-23T08:40:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 944,
+        "started": "2020-11-23T12:00:00",
+        "stopped": "2020-11-23T12:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 945,
+        "started": "2020-11-23T18:00:00",
+        "stopped": "2020-11-23T18:10:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 946,
+        "started": "2020-11-24T02:00:00",
+        "stopped": "2020-11-24T02:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 947,
+        "started": "2020-11-24T08:00:00",
+        "stopped": "2020-11-24T08:05:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 948,
+        "started": "2020-11-24T22:00:00",
+        "stopped": "2020-11-24T22:15:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 949,
+        "started": "2020-11-25T08:00:00",
+        "stopped": "2020-11-25T08:05:00",
+        "maxPainLevel": 2,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 950,
+        "started": "2020-11-25T12:00:00",
+        "stopped": "2020-11-25T12:20:00",
+        "maxPainLevel": 2,
+        "comments": "air conditioner in the car, pain started while I was driving to work",
+        "usedAbortiveTreatments": []
+    },
+    {
+        "attackId": 951,
+        "started": "2020-11-26T08:00:00",
+        "stopped": "2020-11-26T08:10:00",
+        "maxPainLevel": 2,
+        "comments": "started when I was jogging despite in the morning all was good",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            },
+            {
+                "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+                "tradeName": null,
+                "units": "mg",
+                "successful": true,
+                "doze": 160
+            }
+        ]
+    },
+    {
+        "attackId": 952,
+        "started": "2020-11-26T12:00:00",
+        "stopped": "2020-11-26T12:10:00",
+        "maxPainLevel": 2,
+        "comments": "started when I was jogging and vanished",
+        "usedAbortiveTreatments": [
+            {
+                "name": "Cardio Workout",
+                "tradeName": null,
+                "units": "bpm",
+                "successful": true,
+                "doze": 150
+            }
+        ]
+    },
+    {
+        "attackId": 953,
+        "started": "2020-11-27T06:00:00",
+        "stopped": "2020-11-27T06:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 954,
+        "started": "2020-11-27T08:00:00",
+        "stopped": "2020-11-27T08:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 955,
+        "started": "2020-11-29T03:00:00",
+        "stopped": "2020-11-29T03:10:00",
+        "maxPainLevel": 4,
+        "comments": "pain is light, cluster is fading, but I still prefer to abort pain with Oxygen",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 956,
+        "started": "2020-11-29T07:30:00",
+        "stopped": "2020-11-29T07:40:00",
+        "maxPainLevel": 4,
+        "comments": "pain is light, cluster is fading, but I still prefer to abort pain with Oxygen",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 957,
+        "started": "2020-12-01T02:00:00",
+        "stopped": "2020-12-01T02:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 958,
+        "started": "2020-12-01T04:45:00",
+        "stopped": "2020-12-01T04:55:00",
+        "maxPainLevel": 4,
+        "comments": "pain attacks showed up in large quantities (i wasn't using UVB for 5 days)",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 959,
+        "started": "2020-12-01T08:00:00",
+        "stopped": "2020-12-01T08:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 960,
+        "started": "2020-12-02T00:30:00",
+        "stopped": "2020-12-02T00:40:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 961,
+        "started": "2020-12-02T03:10:00",
+        "stopped": "2020-12-02T03:20:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 962,
+        "started": "2020-12-02T07:00:00",
+        "stopped": "2020-12-02T07:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 963,
+        "started": "2020-12-03T02:45:00",
+        "stopped": "2020-12-03T02:55:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 964,
+        "started": "2020-12-03T08:00:00",
+        "stopped": "2020-12-03T08:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    },
+    {
+        "attackId": 965,
+        "started": "2020-12-04T00:00:00",
+        "stopped": "2020-12-04T00:10:00",
+        "maxPainLevel": 4,
+        "comments": "",
+        "usedAbortiveTreatments": [
+            {
+                "name": "100% oxygen via nonrebreathing mask",
+                "tradeName": null,
+                "units": "lpm",
+                "successful": true,
+                "doze": 15
+            }
+        ]
+    }
+]
