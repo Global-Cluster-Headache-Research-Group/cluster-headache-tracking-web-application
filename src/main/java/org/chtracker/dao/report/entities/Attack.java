@@ -1,37 +1,26 @@
-package org.chtracker.dao.report;
+package org.chtracker.dao.report.entities;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.chtracker.dao.DataConfiguration;
+import org.chtracker.dao.profile.Patient;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.chtracker.dao.DataConfiguration;
-import org.chtracker.dao.profile.Patient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(
-		schema = DataConfiguration.REPORT_SCHEMA_NAME, 
+		schema = DataConfiguration.REPORT_SCHEMA_NAME,
 		uniqueConstraints = { @UniqueConstraint(
 				name = "attack_uniq",
 				columnNames = { "started", "patient_id" }
-				) 
+				)
 		})
 public class Attack {
 
@@ -47,6 +36,7 @@ public class Attack {
 	@ManyToOne(optional = false)
 	@JoinColumn(foreignKey = @ForeignKey(name = "attack__patient_fk"))
 	private Patient patient;
+
 	@Min(1)
 	@Max(10)
 	private int maxPainLevel;
@@ -121,12 +111,24 @@ public class Attack {
 		return comments;
 	}
 
+	public void setAbortiveTreatments(List<AbortiveTreatment> abortiveTreatments) {
+		this.abortiveTreatments = abortiveTreatments;
+	}
+
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
 
 	public Patient getPatient() {
 		return patient;
+	}
+
+	public boolean getWhileAsleep() {
+		return whileAsleep;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override
@@ -156,5 +158,4 @@ public class Attack {
 	public String toString() {
 		return "Attack [patient=" + patient + ", started=" + started + "]";
 	}
-
 }

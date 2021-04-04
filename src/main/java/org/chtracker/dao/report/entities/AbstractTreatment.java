@@ -1,4 +1,4 @@
-package org.chtracker.dao.report;
+package org.chtracker.dao.report.entities;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
