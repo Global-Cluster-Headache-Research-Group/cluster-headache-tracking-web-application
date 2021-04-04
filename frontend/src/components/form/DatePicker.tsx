@@ -1,8 +1,9 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { XCircle } from 'react-bootstrap-icons';
 
 type Props = {
+  name: string;
   label: string;
   value?: string;
   onDateChange(e: ChangeEvent<any>): void;
@@ -22,6 +23,7 @@ const DatePicker = (props: Props) => (
         </InputGroup.Prepend>
       )}
       <Form.Control
+        name={props.name}
         type={props.type ?? 'date'}
         value={props.value}
         onChange={props.onDateChange}

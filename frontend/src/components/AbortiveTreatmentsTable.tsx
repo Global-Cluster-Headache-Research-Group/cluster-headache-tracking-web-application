@@ -1,4 +1,3 @@
-import React from 'react';
 import { EmojiAngry, EmojiLaughing } from 'react-bootstrap-icons';
 import BootstrapTable, { ColumnDescription } from 'react-bootstrap-table-next';
 import { AbortiveTreatment } from '../types/reports'

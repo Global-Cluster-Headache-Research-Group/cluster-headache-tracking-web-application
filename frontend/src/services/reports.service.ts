@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AbortiveTreatmentType, Report } from "../types/reports";
+import { AbortiveTreatmentType, Report, SearchReportParams } from "../types/reports";
 import { Pageable } from "../types/common";
 
 type ReportsResponse = {
@@ -25,16 +25,16 @@ export class ReportsService {
 
   private static isoStringOrUndefined = (date?: string) => date ? new Date(date).toISOString() : undefined;
 
-  static async getReports(pageable: Pageable, form: { from?: string, to?: string }): Promise<ReportsResponse> {
+  static async getReports({ pageable, form }: { pageable: Pageable, form: SearchReportParams }): Promise<ReportsResponse> {
     const { data: {
       content,
       totalElements,
-    } } = await axios.get<ReportsResponse>(this.REPORTS_BASE_URL, {
+    } } = await axios.get<ReportsResponse>(ReportsService.REPORTS_BASE_URL, {
       params: {
         ...pageable,
-        from: this.isoStringOrUndefined(form.from),
-        to: this.isoStringOrUndefined(form.to),
-        sort: `${pageable.sort},${pageable.direction}`,
+        from: ReportsService.isoStringOrUndefined(form?.from),
+        to: ReportsService.isoStringOrUndefined(form?.to),
+        sort: `${pageable?.sort},${pageable?.direction}`,
       },
     });
     return { content, totalElements };
@@ -49,7 +49,7 @@ export class ReportsService {
   }
 
   static async getAbortiveTreatmentTypes(): Promise<AbortiveTreatmentType[]> {
-    const { data } = await axios.get<AbortiveTreatmentType[]>(this.ABORTIVE_TREATMENTS_URL);
+    const { data } = await axios.get<AbortiveTreatmentType[]>(ReportsService.ABORTIVE_TREATMENTS_URL);
     return data;
   }
 }

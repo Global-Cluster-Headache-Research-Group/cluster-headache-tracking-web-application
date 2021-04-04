@@ -1,3 +1,8 @@
+export type SearchReportParams = {
+  from?: string;
+  to?: string;
+}
+
 export type Report = {
   attackId: string;
   started: Date;

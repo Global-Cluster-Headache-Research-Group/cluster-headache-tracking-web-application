@@ -1,18 +1,17 @@
 import { Container } from 'react-bootstrap';
+import { QueryClientProvider } from 'react-query';
 import AppNavbar from './components/AppNavbar';
-import ReportsTable from './components/ReportsTable';
-import { ReportsContextProvider } from './context/ReportsContext';
+import { queryClient } from './services/queryClient';
+import Reports from './views/Reports';
 
 function App() {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <AppNavbar />
       <Container>
-        <ReportsContextProvider>
-          <ReportsTable />
-        </ReportsContextProvider>
+        <Reports />
       </Container>
-    </div>
+    </QueryClientProvider>
   );
 }
 

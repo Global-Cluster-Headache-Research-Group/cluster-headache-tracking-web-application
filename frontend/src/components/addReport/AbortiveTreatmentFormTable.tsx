@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import { XCircle } from 'react-bootstrap-icons';
-import { isEqual, omit, last } from 'lodash/fp';
+import { last } from 'lodash/fp';
 import { AbortiveTreatmentType } from '../../types/reports';
+import { Button, Row } from 'react-bootstrap';
 
 type Props = {
   onChange(list: UsedTreatment[]): void;
@@ -55,47 +56,33 @@ const createColDefs = (onRemove: (id: number) => void, selectTypes: AbortiveTrea
   },
 ];
 
-const initialItem = {
-  id: 0,
-  usedTreatmentId: '',
-  doze: '0',
-  successful: 'true',
-};
-
 const AbortiveTreatmentFormTable = (props: Props) => {
-  const omitId = omit('id');
-  const isEqualWithoutId = (oldV: any, newV: any): boolean => isEqual(omitId(oldV), omitId(newV));
   const getId = (l: Array<{ id: number }>): number => (last(l)?.id ?? 0) + 1;
 
-  const [list, changeList] = useState<UsedTreatment[]>([{ ...initialItem }]);
+  const [list, changeList] = useState<UsedTreatment[]>([]);
 
-  useEffect(() => props.onChange(list.filter(i => !isEqualWithoutId(i, initialItem))), [list]);
+  useEffect(() => props.onChange(list), [list]);
 
-  const addNewRow = () => changeList(l => [...l, { ...initialItem, id: getId(l) }]);
-
-  const handleRowEdit = (oldV: string, newV: string, row: UsedTreatment) => {
-    if (!isEqualWithoutId(initialItem, row) && row.id >= last(list)!.id) {
-      addNewRow();
-    }
-    changeList(l => l.map((t: any) => t.id !== row.id ? t : row));
-  }
-
-  const handleRowRemove = (id: number) => changeList(l => id === last(l)!.id
-    ? l
-    : l.filter((t: any) => t.id !== id),
-  );
+  const handleAddNewRow = () => changeList(l => [...l, { id: getId(l), usedTreatmentId: '', doze: '0', successful: 'true' }]);
+  const handleRowEdit = (oldV: string, newV: string, row: UsedTreatment) => changeList(l => l.map((t: any) => t.id === row.id ? row : t))
+  const handleRowRemove = (id: number) => changeList(l => l.filter((t: any) => t.id !== id));
 
   return (
-    <BootstrapTable
-      keyField="id"
-      columns={createColDefs(handleRowRemove, props.abortiveTreatmentTypes)}
-      data={list}
-      cellEdit={cellEditFactory({
-        mode: 'click',
-        blurToSave: true,
-        afterSaveCell: handleRowEdit,
-      })}
-    />
+    <>
+      <BootstrapTable
+        keyField="id"
+        columns={createColDefs(handleRowRemove, props.abortiveTreatmentTypes)}
+        data={list}
+        cellEdit={cellEditFactory({
+          mode: 'click',
+          blurToSave: true,
+          afterSaveCell: handleRowEdit,
+        })}
+      />
+      <Row>
+        <Button onClick={handleAddNewRow} block variant="link">Add used treatment</Button>
+      </Row>
+    </>
   );
 };
 

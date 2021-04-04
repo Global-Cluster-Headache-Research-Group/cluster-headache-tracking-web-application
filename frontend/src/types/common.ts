@@ -3,4 +3,5 @@ export type Pageable = {
   size: number;
   sort: string;
   direction: string;
+  totalElements: number;
 }

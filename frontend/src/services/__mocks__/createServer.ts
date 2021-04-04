@@ -4,10 +4,10 @@ import treatmentTypes from './abortiveTreatmentTypes.json';
 
 createServer({
   routes() {
+    const reportsList = reports;
     this.get('http://localhost:8080/reports', (_, { queryParams: { page, size, sort = 'started,asc', from, to }}: Request) => {
       const [sortField, direction] = sort.split(',');
-      console.log(sortField, direction);
-      const filteredReports = reports
+      const filteredReports = reportsList
         .sort((a, b) => {
           // @ts-ignore
           if ((a[sortField] > b[sortField]) ^ (direction === 'desc')) {
@@ -36,5 +36,13 @@ createServer({
       };
     });
     this.get('http://localhost:8080/abortive-treatment-types', () => treatmentTypes)
+    this.post('http://localhost:8080/reports', (_, { requestBody }) => {
+      const form = JSON.parse(requestBody);
+      reportsList.push({
+        ...form,
+        usedAbortiveTreatments: form.usedTreatments,
+      })
+      return {};
+    })
   },
 });
