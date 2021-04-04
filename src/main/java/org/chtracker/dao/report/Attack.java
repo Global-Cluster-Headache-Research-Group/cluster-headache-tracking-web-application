@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,7 +55,7 @@ public class Attack {
 	@Size(max = 1000)
 	private String comments;
 	
-	@OneToMany(mappedBy = "attack",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "attack",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
 	private Collection<AbortiveTreatment> abortiveTreatments = new ArrayList<>();
 
 	Attack() {
