@@ -1,0 +1,128 @@
+[
+  {
+      "id": 2,
+      "name": "100% oxygen via demand valve",
+      "units": "lpm",
+      "tradeName": null
+  },
+  {
+      "id": 1,
+      "name": "100% oxygen via nonrebreathing mask",
+      "units": "lpm",
+      "tradeName": null
+  },
+  {
+      "id": 13,
+      "name": "Acetylsalicylic  acid",
+      "units": "mg",
+      "tradeName": "Aspirin"
+  },
+  {
+      "id": 21,
+      "name": "Betamethasone injection",
+      "units": "mcg",
+      "tradeName": null
+  },
+  {
+      "id": 7,
+      "name": "Caffeine in a drink e.g. coffee, redbull or pepsi",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 8,
+      "name": "Caffeine pills",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 20,
+      "name": "Cannabidiol inhalant",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 16,
+      "name": "Cannabis inhalation",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 17,
+      "name": "Cardio Workout",
+      "units": "bpm",
+      "tradeName": null
+  },
+  {
+      "id": 10,
+      "name": "Erenumab",
+      "units": "mg",
+      "tradeName": "Aimovig"
+  },
+  {
+      "id": 11,
+      "name": "Fremanezumab",
+      "units": "mg",
+      "tradeName": "Ajovy"
+  },
+  {
+      "id": 9,
+      "name": "Galcanezumab",
+      "units": "mg",
+      "tradeName": "Emgality"
+  },
+  {
+      "id": 15,
+      "name": "Gammacore Neurostimulator",
+      "units": "seconds",
+      "tradeName": null
+  },
+  {
+      "id": 18,
+      "name": "Hyperventilation",
+      "units": "bpm",
+      "tradeName": null
+  },
+  {
+      "id": 12,
+      "name": "Lidocaine drops 4%",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 14,
+      "name": "SPG Neurostimulator",
+      "units": "seconds",
+      "tradeName": null
+  },
+  {
+      "id": 3,
+      "name": "Sumatriptan injection",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 4,
+      "name": "Sumatriptan nasal powder",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 5,
+      "name": "Sumatriptan nasal spray",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 6,
+      "name": "Sumatriptan pills",
+      "units": "mg",
+      "tradeName": null
+  },
+  {
+      "id": 19,
+      "name": "Tetrahydrocannabinol inhalant",
+      "units": "mg",
+      "tradeName": null
+  }
+]
