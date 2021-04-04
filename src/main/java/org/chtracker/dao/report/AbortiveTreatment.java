@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,7 +19,11 @@ import org.chtracker.dao.profile.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(schema = DataConfiguration.REPORT_SCHEMA_NAME)
+@Table(schema = DataConfiguration.REPORT_SCHEMA_NAME, indexes = {
+		@Index(name = "abortive_treatment__attack_id_idx", columnList = "attack_id"),
+		@Index(name = "abortive_treatment__successful_idx", columnList = "successful"),
+		@Index(name = "abortive_treatment__abortive_treatment_type_idx", columnList = "abortive_treatment_type_id")
+})
 public class AbortiveTreatment extends AbstractTreatment {
 
 	@JsonIgnore

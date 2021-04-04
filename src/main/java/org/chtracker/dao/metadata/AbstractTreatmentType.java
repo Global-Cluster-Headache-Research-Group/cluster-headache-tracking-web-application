@@ -1,11 +1,13 @@
 package org.chtracker.dao.metadata;
 
+import java.io.Serializable;
+
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class AbstractTreatmentType {
-
+public abstract class AbstractTreatmentType implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	private int id;
 	private String name;

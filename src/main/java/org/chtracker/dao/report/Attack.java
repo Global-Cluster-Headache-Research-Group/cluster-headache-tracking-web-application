@@ -11,6 +11,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,8 +33,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		uniqueConstraints = { @UniqueConstraint(
 				name = "attack_uniq",
 				columnNames = { "started", "patient_id" }
-				) 
-		})
+				)
+		}
+		,
+		indexes = {
+				@Index(name="attack__patient_idx", columnList = "patient_id"),
+				@Index(name="attack__stared_idx", columnList = "started"),
+				@Index(name="attack__stopped_idx", columnList = "stopped"),
+//				@Index(name="attack__max_pain_level_idx", columnList = "max_pain_level"),
+//				@Index(name="attack__while_asleep_idx", columnList = "while_asleep")
+				}
+		)
 public class Attack {
 
 	@Id
