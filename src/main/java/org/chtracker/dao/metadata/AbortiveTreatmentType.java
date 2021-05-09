@@ -9,8 +9,8 @@ import org.hibernate.annotations.Immutable;
 @Immutable
 @Entity
 @Table(schema = DataConfiguration.METADA_SCHEMA_NAME)
-public class AbortiveTreatmentType extends AbstractTreatmentType{
+public class AbortiveTreatmentType extends AbstractTreatmentType {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

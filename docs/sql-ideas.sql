@@ -86,5 +86,14 @@ ORDER BY patient_id, started;
 --should we consider dose per patient weight? )
 
  
+--populate attack table for performance testing
+INSERT INTO profile.patient (gender,is_blocked,is_deleted,login,name)  SELECT random()*4, FALSE,FALSE,'t'||random()*1000000000,'tester-name'  FROM  generate_series(0, 10000);
 
 
+INSERT INTO report.attack (id,max_pain_level,started,while_asleep,patient_id)  SELECT nextval('report.attack_seq'), 1+random()*4, timestamp '2014-01-10' + random() * (timestamp '2030-01-01'-timestamp '2014-01-10') ,random() > 0.5, 1+10000*random() FROM  generate_series(0, 10000000);
+
+INSERT INTO report.abortive_treatment (id,doze,started,patient_id,abortive_treatment_type_id,attack_id)  SELECT nextval('report.abortive_treatment_seq'),random()*10, timestamp '2014-01-10' + random() * (timestamp '2030-01-01'-timestamp '2014-01-10') ,10000*random(), 10*random() ,100000*random() FROM  generate_series(0, 10000000);
+
+
+--sample query
+explain analyze  SELECT * FROM report.attack WHERE patient_id=1 AND max_pain_level>3 AND while_asleep=TRUE  ORDER BY started DESC LIMIT 1000;

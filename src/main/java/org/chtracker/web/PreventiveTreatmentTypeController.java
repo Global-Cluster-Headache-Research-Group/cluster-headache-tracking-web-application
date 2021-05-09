@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/preventive-treatment-types")
 public class PreventiveTreatmentTypeController {
 
-	private final PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository;
+    private final PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository;
 
-	@Autowired
-	public PreventiveTreatmentTypeController(PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository) {
-		this.preventiveTreatmentTypeRepository = preventiveTreatmentTypeRepository;
-	}
+    @Autowired
+    public PreventiveTreatmentTypeController(PreventiveTreatmentTypeRepository preventiveTreatmentTypeRepository) {
+        this.preventiveTreatmentTypeRepository = preventiveTreatmentTypeRepository;
+    }
 
-	@GetMapping("/")
-	public Iterable<PreventiveTreatmentType> findAll() {
-		return preventiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
-	}
+    @GetMapping("/")
+    public Iterable<PreventiveTreatmentType> findAll() {
+        return preventiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
+    }
 
 }

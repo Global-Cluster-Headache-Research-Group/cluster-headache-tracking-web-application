@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/abortive-treatment-types")
 public class AbortiveTreatmentTypeController {
 
-	private final AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository;
+    private final AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository;
 
-	@Autowired
-	public AbortiveTreatmentTypeController(AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository) {
-		this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
-	}
+    @Autowired
+    public AbortiveTreatmentTypeController(AbortiveTreatmentTypeRepository abortiveTreatmentTypeRepository) {
+        this.abortiveTreatmentTypeRepository = abortiveTreatmentTypeRepository;
+    }
 
-	@GetMapping("/")
-	public Iterable<AbortiveTreatmentType> findAll() {
-		return abortiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
-	}
+    @GetMapping("/")
+    public Iterable<AbortiveTreatmentType> findAll() {
+        return abortiveTreatmentTypeRepository.findAll(Sort.by(new Sort.Order(Direction.ASC, "name")));
+    }
 
 }

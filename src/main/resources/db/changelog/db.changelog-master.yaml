@@ -2,4 +2,6 @@ databaseChangeLog:
 - include:
     file: classpath:db/changelog/db.changelog-release-1.0.0.sql
 - include:
-    file: classpath:db/changelog/db.changelog-release-1.0.1.sql    
+    file: classpath:db/changelog/db.changelog-release-1.0.1.sql
+- include:
+    file: classpath:db/changelog/db.changelog-release-1.0.2.sql

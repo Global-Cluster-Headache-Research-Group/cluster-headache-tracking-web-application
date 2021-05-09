@@ -14,12 +14,12 @@ import org.springframework.util.Assert;
 @Configuration
 public class BaseConfiguration {
 
-	@Bean
-	@Scope("prototype")
-	public Logger logger(InjectionPoint injectionPoint) {
-		MethodParameter methodParameter = injectionPoint.getMethodParameter();
-		Assert.notNull(methodParameter, "method parameter is expected to be non null");
-		return LoggerFactory.getLogger(methodParameter.getContainingClass());
-	}
+    @Bean
+    @Scope("prototype")
+    public Logger logger(InjectionPoint injectionPoint) {
+        MethodParameter methodParameter = injectionPoint.getMethodParameter();
+        Assert.notNull(methodParameter, "method parameter is expected to be non null");
+        return LoggerFactory.getLogger(methodParameter.getContainingClass());
+    }
 
 }

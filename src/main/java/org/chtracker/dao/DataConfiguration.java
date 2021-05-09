@@ -7,9 +7,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackageClasses = DataConfiguration.class)
 @ComponentScan(basePackageClasses = DataConfiguration.class)
-@SuppressWarnings("java:S1118")
 public class DataConfiguration {
-	public static final String REPORT_SCHEMA_NAME = "report";
-	public static final String PROFILE_SCHEMA_NAME = "profile";
-	public static final String METADA_SCHEMA_NAME = "metadata";
+    public static final String REPORT_SCHEMA_NAME = "report";
+    public static final String PROFILE_SCHEMA_NAME = "profile";
+    public static final String METADA_SCHEMA_NAME = "metadata";
+
+    DataConfiguration() {
+        // prevents accidental instantiation
+    }
+
 }

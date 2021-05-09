@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface AbortiveTreatmentTypeRepository extends PagingAndSortingRepository<AbortiveTreatmentType, Integer> {
 
-	@Cacheable("abortiveTreatmentType")
-	AbortiveTreatmentType findByNameContainingIgnoreCase(String name);
-	
+    @Cacheable("abortiveTreatmentType")
+    AbortiveTreatmentType findByNameContainingIgnoreCase(String name);
+
 }
