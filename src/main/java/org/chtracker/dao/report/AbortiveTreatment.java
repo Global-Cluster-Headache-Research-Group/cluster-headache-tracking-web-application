@@ -1,136 +1,121 @@
 package org.chtracker.dao.report;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-import org.chtracker.dao.metadata.TreatmentType;
-import org.chtracker.dao.profile.Patient;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
-public class AbortiveTreatment {
+import org.chtracker.dao.DataConfiguration;
+import org.chtracker.dao.metadata.AbortiveTreatmentType;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
-	private LocalDateTime attackStarted;
-	private LocalDateTime started;
-	private LocalDateTime stopped;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-	private final Patient patient;
-	private final TreatmentType treatmentType;
-	private int doze;
-	private Boolean successful;
-	private String comments;
+@Entity
+@Table(schema = DataConfiguration.REPORT_SCHEMA_NAME, uniqueConstraints = {
+        @UniqueConstraint(name = "abortive_uniq", columnNames = { "attack_id", "started", "abortive_treatment_type_id" })
+}, indexes = {
+        @Index(name = "abortive_treatment__attack_id_idx", columnList = "attack_id"),
+        @Index(name = "abortive_treatment__abortive_treatment_type_idx", columnList = "abortive_treatment_type_id")
+})
+public class AbortiveTreatment extends AbstractTreatment {
 
-	public AbortiveTreatment(LocalDateTime attackStarted, LocalDateTime started, LocalDateTime stopped, Patient patient, TreatmentType treatmentType, int doze, Boolean successful, String comments) {
-		this.attackStarted = attackStarted;
-		this.started = started;
-		this.stopped = stopped;
-		this.patient = patient;
-		this.treatmentType = treatmentType;
-		this.doze = doze;
-		this.successful = successful;
-		this.comments = comments;
-	}
+    @Id
+    @GeneratedValue(generator = "abortiveTreatmentSequenceGenerator", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "abortiveTreatmentSequenceGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "report.abortive_treatment_seq"),
+            @Parameter(name = "initial_value", value = "1"),
+    })
+    private int id;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((attackStarted == null) ? 0 : attackStarted.hashCode());
-		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
-		result = prime * result + ((started == null) ? 0 : started.hashCode());
-		result = prime * result + ((treatmentType == null) ? 0 : treatmentType.hashCode());
-		return result;
-	}
+    @JsonIgnore
+    @NotNull
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__attack_fk"))
+    private Attack attack;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AbortiveTreatment other = (AbortiveTreatment) obj;
-		if (attackStarted == null) {
-			if (other.attackStarted != null)
-				return false;
-		} else if (!attackStarted.equals(other.attackStarted))
-			return false;
-		if (patient == null) {
-			if (other.patient != null)
-				return false;
-		} else if (!patient.equals(other.patient))
-			return false;
-		if (started == null) {
-			if (other.started != null)
-				return false;
-		} else if (!started.equals(other.started))
-			return false;
-		if (treatmentType == null) {
-			if (other.treatmentType != null)
-				return false;
-		} else if (!treatmentType.equals(other.treatmentType))
-			return false;
-		return true;
-	}
+    @ManyToOne(optional = false)
+    @JoinColumn(foreignKey = @ForeignKey(name = "abortive_treatment__abortive_treatment_fk"))
+    private AbortiveTreatmentType abortiveTreatmentType;
 
-	public LocalDateTime getStarted() {
-		return started;
-	}
+    private Boolean successful;
 
-	public void setStarted(LocalDateTime started) {
-		this.started = started;
-	}
+    AbortiveTreatment() {
+    }
 
-	public LocalDateTime getStopped() {
-		return stopped;
-	}
+    public AbortiveTreatment(Attack attack, LocalDateTime started, LocalDateTime stopped, AbortiveTreatmentType abortiveTreatmentType, int doze, Boolean successful) {
+        this.attack = attack;
+        this.successful = successful;
+        this.setStarted(started);
+        this.setStopped(stopped);
+        this.setAbortiveTreatmentType(abortiveTreatmentType);
+        this.setDoze(doze);
+    }
 
-	public void setStopped(LocalDateTime stopped) {
-		this.stopped = stopped;
-	}
+    @Override
+    public int getId() {
+        return id;
+    }
 
-	public LocalDateTime getAttackStarted() {
-		return attackStarted;
-	}
+    public Attack getAttack() {
+        return attack;
+    }
 
-	public void setAttackStarted(LocalDateTime attackStarted) {
-		this.attackStarted = attackStarted;
-	}
+    public void setAttack(Attack attack) {
+        this.attack = attack;
+    }
 
-	public int getDoze() {
-		return doze;
-	}
+    public AbortiveTreatmentType getAbortiveTreatmentType() {
+        return abortiveTreatmentType;
+    }
 
-	public void setDoze(int doze) {
-		this.doze = doze;
-	}
+    public void setAbortiveTreatmentType(AbortiveTreatmentType abortiveTreatmentType) {
+        this.abortiveTreatmentType = abortiveTreatmentType;
+    }
 
-	public Boolean getSuccessful() {
-		return successful;
-	}
+    public Boolean getSuccessful() {
+        return successful;
+    }
 
-	public void setSuccessful(Boolean successful) {
-		this.successful = successful;
-	}
+    public void setSuccessful(Boolean successful) {
+        this.successful = successful;
+    }
 
-	public String getComments() {
-		return comments;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Objects.hash(abortiveTreatmentType, attack);
+        return result;
+    }
 
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (!(obj instanceof AbortiveTreatment))
+            return false;
+        AbortiveTreatment other = (AbortiveTreatment) obj;
+        return Objects.equals(abortiveTreatmentType, other.abortiveTreatmentType) && Objects.equals(attack, other.attack);
+    }
 
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public TreatmentType getTreatmentType() {
-		return treatmentType;
-	}
-
-	@Override
-	public String toString() {
-		return "AbortiveTreatment [attackStarted=" + attackStarted + ", started=" + started + ", stopped=" + stopped + ", patient=" + patient + ", treatmentType=" + treatmentType + ", doze=" + doze
-				+ ", successful=" + successful + "]";
-	}
+    @Override
+    public String toString() {
+        return "AbortiveTreatment [id=" + id + ", attack=" + attack + ", abortiveTreatmentType=" + abortiveTreatmentType + ", successful=" + successful + "]";
+    }
 
 }
