@@ -134,7 +134,7 @@ CREATE TABLE report.attack (
 ALTER TABLE ONLY report.attack ADD CONSTRAINT attack__patient_fk FOREIGN KEY (patient_id) REFERENCES profile.patient(id);
 ALTER TABLE ONLY report.attack ADD CONSTRAINT attack_uniq UNIQUE (patient_id, started);
 
-CREATE SEQUENCE report.attack_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+CREATE SEQUENCE report.attack_seq START WITH 1 INCREMENT BY 50 NO MINVALUE NO MAXVALUE CACHE 100;
 
 CREATE TABLE report.abortive_treatment (
     id integer PRIMARY KEY,
@@ -153,7 +153,7 @@ ALTER TABLE ONLY report.abortive_treatment ADD CONSTRAINT abortive_treatment__at
 CREATE INDEX abortive_treatment__abortive_treatment_type_idx ON report.abortive_treatment USING btree (abortive_treatment_type_id);
 CREATE INDEX abortive_treatment__attack_id_idx ON report.abortive_treatment USING btree (attack_id);
 
-CREATE SEQUENCE report.abortive_treatment_seq START WITH 1 INCREMENT BY 1 NO MINVALUE  NO MAXVALUE CACHE 1;
+CREATE SEQUENCE report.abortive_treatment_seq START WITH 1 INCREMENT BY 50 NO MINVALUE  NO MAXVALUE CACHE 100;
 
 CREATE TABLE report.preventive_treatment (
     id integer PRIMARY KEY,
@@ -171,6 +171,8 @@ ALTER TABLE ONLY report.preventive_treatment ADD CONSTRAINT preventive_treatment
 CREATE INDEX preventive_treatment__patient_id_preventive_treatment_type_id_i ON report.preventive_treatment USING btree (patient_id, preventive_treatment_type_id);
 CREATE INDEX preventive_treatment__patient_id_started_idx ON report.preventive_treatment USING btree (patient_id, started);
 
-CREATE SEQUENCE report.preventive_treatment_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+CREATE SEQUENCE report.preventive_treatment_seq START WITH 1 INCREMENT BY 50 NO MINVALUE NO MAXVALUE CACHE 100;
 
+INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('yilativs','yilativs@somemail.com','1978-01-01','Vitaliy Semochkin',NULL,1,FALSE,FALSE);
+INSERT INTO profile.patient (login, email ,birthday ,name , password_hash , gender , is_blocked,is_deleted) VALUES('pavias','pavia@somemail.com','1974-12-15','Pavia Anderson',NULL,2,FALSE,FALSE);
 
