@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>50</x>
+      <y>260</y>
+      <w>220</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Pain Diary Web UI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>800</x>
+      <y>500</y>
+      <w>360</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Activity Tracker Backend</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>60</x>
+      <y>650</y>
+      <w>220</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Pain Diary Database</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1200</x>
+      <y>500</y>
+      <w>290</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Attack Predicting AI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>840</x>
+      <y>150</y>
+      <w>300</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Activity Tracker Band (IOT)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>850</x>
+      <y>260</y>
+      <w>270</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Pain Diary Mobile Application</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>50</x>
+      <y>500</y>
+      <w>230</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Pain Diary Backend</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>800</x>
+      <y>640</y>
+      <w>350</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Activity Database</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>0</x>
+      <y>460</y>
+      <w>1530</w>
+      <h>390</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Cloud</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>380</x>
+      <y>520</y>
+      <w>290</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Pain Diary Study AI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>180</x>
+      <y>0</y>
+      <w>60</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Patient</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
